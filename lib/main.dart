@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lofo_app/api_client/api_client.dart';
+import 'package:lofo_app/widgets/profile/change_data/change_data.dart';
 import 'widgets/home.dart';
 import 'widgets/intro_slider.dart';
 import 'widgets/login/signin.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/main': (context) => const HomeWidget(),
         '/login': (context) => const SigninWidget(),
         '/signup': (context) => const SignupWidget(),
+        '/change_data': (context) => const ChangeDataPage(),
       },
     );
   }

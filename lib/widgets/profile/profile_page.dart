@@ -54,13 +54,18 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
             ),
           ),
           const SizedBox(height: 30,),
-          Row(
-            children: const [
-              Icon(Icons.change_circle),
-              SizedBox(width: 5,),
-              Expanded(child: Text('Change personal data', style: TextStyle(fontSize: 20),)),
-              Icon(Icons.chevron_right)
-            ],
+          GestureDetector(
+            onTap: (){
+              Navigator.of(context).pushNamed('/change_data');
+            },
+            child: Row(
+              children: const [
+                Icon(Icons.change_circle),
+                SizedBox(width: 5,),
+                Expanded(child: Text('Change personal data', style: TextStyle(fontSize: 20),)),
+                Icon(Icons.chevron_right)
+              ],
+            ),
           ),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 8),
