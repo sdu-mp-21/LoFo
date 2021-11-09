@@ -28,12 +28,12 @@ class _HomeWidgetState extends State<HomeWidget> {
     });
   }
 
-  void updateActionBarTitle(int index){
-    if(index == 0){
+  void updateActionBarTitle(int index) {
+    if (index == 0) {
       actionBarTitle = 'Lost and Found Items';
-    } else if(index == 1){
+    } else if (index == 1) {
       actionBarTitle = 'Add Item';
-    } else{
+    } else {
       actionBarTitle = 'My Profile';
     }
   }
@@ -42,10 +42,12 @@ class _HomeWidgetState extends State<HomeWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(actionBarTitle, style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(actionBarTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Colors.blueAccent.withOpacity(0.1),//white
+        //backgroundColor: Colors.blueAccent.withOpacity(0.1), //white
+        backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         automaticallyImplyLeading: false,
       ),
@@ -68,7 +70,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.black,
+        selectedItemColor: Colors.lightBlue,
         unselectedItemColor: Colors.grey,
         unselectedLabelStyle: textStyle,
         onTap: _onItemTapped,
@@ -76,6 +78,3 @@ class _HomeWidgetState extends State<HomeWidget> {
     );
   }
 }
-
-
-
