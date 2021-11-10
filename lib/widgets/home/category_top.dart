@@ -8,6 +8,19 @@ class TopListviewWidget extends StatefulWidget {
 }
 
 class _TopListviewWidgetState extends State<TopListviewWidget> {
+  List<bool> isActive = [false,false,false,true,false];
+
+  void _changeActive(int index){
+    for(var i=0; i<5; i++){
+      if(i == index){
+        isActive[i] = true;
+      }else{
+        isActive[i] = false;
+      }
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -19,6 +32,7 @@ class _TopListviewWidgetState extends State<TopListviewWidget> {
           const SizedBox(width: 16,),
           GestureDetector(
             onTap: (){
+              _changeActive(0);
               widget.controller.animateTo(
                   0,
                   duration: Duration(milliseconds: 1000),
@@ -31,17 +45,18 @@ class _TopListviewWidgetState extends State<TopListviewWidget> {
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text('All',style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
               ),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(999)),
-                  color: Color.fromRGBO(214, 214, 214, 0.8)
+                  color: (isActive[0]==true)?Colors.blue:Color.fromRGBO(214, 214, 214, 0.8)
               ),
             ),
           ),
           const SizedBox(width: 8,),
           GestureDetector(
             onTap: (){
+              _changeActive(1);
               widget.controller.animateTo(
-                  500,
+                  700,
                   duration: Duration(milliseconds: 1000),
                   curve: Curves.easeInOut);
             },
@@ -52,17 +67,18 @@ class _TopListviewWidgetState extends State<TopListviewWidget> {
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text('Mobile',style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
               ),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(999)),
-                  color: Color.fromRGBO(214, 214, 214, 0.8)
+                  color: (isActive[1]==true)?Colors.blue:Color.fromRGBO(214, 214, 214, 0.8)
               ),
             ),
           ),
           const SizedBox(width: 8,),
           GestureDetector(
             onTap: (){
+              _changeActive(2);
               widget.controller.animateTo(
-                  1000,
+                  1450,
                   duration: Duration(milliseconds: 1000),
                   curve: Curves.easeInOut);
             },
@@ -73,36 +89,54 @@ class _TopListviewWidgetState extends State<TopListviewWidget> {
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text('Documents',style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
               ),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(999)),
-                  color: Color.fromRGBO(214, 214, 214, 0.8)
+                  color: (isActive[2]==true)?Colors.blue:Color.fromRGBO(214, 214, 214, 0.8)
               ),
             ),
           ),
           const SizedBox(width: 8,),
-          Container(
-            height: 43,
-            alignment: Alignment.center,
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text('Laptop',style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
-            ),
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(999)),
-                color: Color.fromRGBO(214, 214, 214, 0.8)
+          GestureDetector(
+            onTap: (){
+              _changeActive(3);
+              widget.controller.animateTo(
+                  2150,
+                  duration: Duration(milliseconds: 1000),
+                  curve: Curves.easeInOut);
+            },
+            child: Container(
+              height: 43,
+              alignment: Alignment.center,
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text('Laptop',style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
+              ),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(999)),
+                  color: (isActive[3]==true)?Colors.blue:Color.fromRGBO(214, 214, 214, 0.8)
+              ),
             ),
           ),
           const SizedBox(width: 8,),
-          Container(
-            height: 43,
-            alignment: Alignment.center,
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text('Other',style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
-            ),
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(999)),
-                color: Color.fromRGBO(214, 214, 214, 0.8)
+          GestureDetector(
+            onTap: (){
+              _changeActive(4);
+              widget.controller.animateTo(
+                  2850,
+                  duration: Duration(milliseconds: 1000),
+                  curve: Curves.easeInOut);
+            },
+            child: Container(
+              height: 43,
+              alignment: Alignment.center,
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text('Other',style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
+              ),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(999)),
+                  color: (isActive[4]==true)?Colors.blue:Color.fromRGBO(214, 214, 214, 0.8)
+              ),
             ),
           ),
           const SizedBox(width: 8,),

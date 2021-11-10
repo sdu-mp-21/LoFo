@@ -29,8 +29,8 @@ class _HomePageItemWidgetState extends State<HomePageItemWidget> {
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
+        decoration: const BoxDecoration(
+          borderRadius:  BorderRadius.all(Radius.circular(20)),
         ),
         child: Stack(
           children: [
@@ -60,7 +60,7 @@ class _HomePageItemWidgetState extends State<HomePageItemWidget> {
               ),
               height: 208,
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,9 +93,9 @@ class _HomePageItemWidgetState extends State<HomePageItemWidget> {
                     height: 8,
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(10, 4, 10, 4),
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(17)),
+                    padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
+                    decoration: const BoxDecoration(
+                      borderRadius:  BorderRadius.all(Radius.circular(17)),
                       color: Colors.lightBlue,
                     ),
                     child: Text(
@@ -124,7 +124,7 @@ class _HomePageItemWidgetState extends State<HomePageItemWidget> {
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(15)),
                               image: DecorationImage(
-                                image: AssetImage('assets/image/user.jpg'),
+                                image: NetworkImage(widget.data.customerImg),
                               ),
                             ),
                           ),
@@ -132,12 +132,12 @@ class _HomePageItemWidgetState extends State<HomePageItemWidget> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Anna Luss',
+                              Text(widget.data.customerName,
                                   style: GoogleFonts.roboto(
                                       fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white)),
-                              Text('Student',
+                              Text(widget.data.customerRole,
                                   style: GoogleFonts.roboto(
                                       fontSize: 12,
                                       fontWeight: FontWeight.normal,
