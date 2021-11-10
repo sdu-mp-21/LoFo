@@ -13,6 +13,7 @@ class HomePageWidget extends StatefulWidget {
 }
 
 class _HomePageWidgetState extends State<HomePageWidget> {
+  final ScrollController _controller = ScrollController();
   final List<ItemInfoData> dataSet = [
     ItemInfoData('Airpods 2', 'Found', 'Today','assets/image/airpods_on_hand.png'),
     ItemInfoData('Macbook Air', 'Lost', '3 days ago','assets/image/macbookAir.jpg'),
@@ -25,7 +26,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         color: Colors.blueAccent.withOpacity(0.1),
         child: Column(
           children: [
-            const TopListviewWidget(),
+            TopListviewWidget(controller: _controller,),
             const SizedBox(height: 10,),
             Expanded(
               child: FutureBuilder<List<Record>>(
@@ -38,22 +39,42 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     return const Center(child: Text('LOADING'));
                   }else{
                     return ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                              onTap: (){
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoFoItemInfo(data: snapshot.data![index]),
-                                  ),
-                                );
-                                // Navigator.of(context).pushNamed('/item_information');
-                              },
-                              child: HomePageItemWidget(data: snapshot.data![index],)
+                      controller: _controller,
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        if(index%3==0){
+                          return Column(
+                            children: [
+                              Text('Category ${index/3+1}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),),
+                              GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => LoFoItemInfo(data: snapshot.data![index]),
+                                      ),
+                                    );
+                                    // Navigator.of(context).pushNamed('/item_information');
+                                  },
+                                  child: HomePageItemWidget(data: snapshot.data![index],)
+                              ),
+                            ],
                           );
                         }
+                        return GestureDetector(
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoFoItemInfo(data: snapshot.data![index]),
+                                ),
+                              );
+                              // Navigator.of(context).pushNamed('/item_information');
+                            },
+                            child: HomePageItemWidget(data: snapshot.data![index],)
+                        );
+                      }
                     );
                   }
                 }

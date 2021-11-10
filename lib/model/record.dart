@@ -29,6 +29,11 @@ class Record {
   Record({
     required this.id,
     required this.title,
+    required this.customerNumber,
+    required this.customerRole,
+    required this.customerName,
+    required this.customerImg,
+    required this.category,
     required this.image,
     required this.status,
     required this.time,
@@ -38,6 +43,11 @@ class Record {
 
   final int id;
   final String title;
+  final String customerNumber;
+  final String customerRole;
+  final String customerName;
+  final String customerImg;
+  final String category;
   final String image;
   final String status;
   final String time;
@@ -47,6 +57,11 @@ class Record {
   factory Record.fromJson(Map<String, dynamic> json) => Record(
     id: json["id"],
     title: json["title"],
+    customerNumber: json["customer_number"],
+    customerRole: json["customer_role"],
+    customerName: json["customer_name"],
+    customerImg: json["customer_img"],
+    category: json["category"],
     image: json["image"],
     status: json["status"],
     time: json["time"],
@@ -57,6 +72,11 @@ class Record {
   Map<String, dynamic> toJson() => {
     "id": id,
     "title": title,
+    "customer_number": customerNumber,
+    "customer_role": customerRole,
+    "customer_name": customerName,
+    "customer_img": customerImg,
+    "category": category,
     "image": image,
     "status": status,
     "time": time,
