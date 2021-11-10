@@ -15,15 +15,20 @@ class HomePageWidget extends StatefulWidget {
 class _HomePageWidgetState extends State<HomePageWidget> {
   final ScrollController _controller = ScrollController();
   final List<ItemInfoData> dataSet = [
-    ItemInfoData('Airpods 2', 'Found', 'Today','assets/image/airpods_on_hand.png'),
-    ItemInfoData('Macbook Air', 'Lost', '3 days ago','assets/image/macbookAir.jpg'),
-    ItemInfoData('Qazaq Republic Somke', 'Lost', '1 day ago','assets/image/qrSomke.jpg'),
-    ItemInfoData('Acer Nitro 5', 'Found', 'Today','assets/image/acerNitro.jpg'),
+    ItemInfoData(
+        'Airpods 2', 'Found', 'Today', 'assets/image/airpods_on_hand.png'),
+    ItemInfoData(
+        'Macbook Air', 'Lost', '3 days ago', 'assets/image/macbookAir.jpg'),
+    ItemInfoData('Qazaq Republic Somke', 'Lost', '1 day ago',
+        'assets/image/qrSomke.jpg'),
+    ItemInfoData(
+        'Acer Nitro 5', 'Found', 'Today', 'assets/image/acerNitro.jpg'),
   ];
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Colors.blueAccent.withOpacity(0.1),
+        //color: Colors.blueAccent.withOpacity(0.1),
+        color: Colors.white,
         child: Column(
           children: [
             TopListviewWidget(controller: _controller,),
@@ -79,9 +84,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   }
                 }
               ),
-            ),
-          ],
-        )
-    );
+        )]));
   }
 }
