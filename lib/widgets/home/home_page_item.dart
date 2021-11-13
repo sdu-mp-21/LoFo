@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lofo_app/model/record.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lofo_app/widgets/item_info/author_info.dart';
 
 class ItemInfoData {
   final String name;
@@ -30,7 +31,7 @@ class _HomePageItemWidgetState extends State<HomePageItemWidget> {
       padding: const EdgeInsets.all(15),
       child: Container(
         decoration: const BoxDecoration(
-          borderRadius:  BorderRadius.all(Radius.circular(20)),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         child: Stack(
           children: [
@@ -95,7 +96,7 @@ class _HomePageItemWidgetState extends State<HomePageItemWidget> {
                   Container(
                     padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
                     decoration: const BoxDecoration(
-                      borderRadius:  BorderRadius.all(Radius.circular(17)),
+                      borderRadius: BorderRadius.all(Radius.circular(17)),
                       color: Colors.lightBlue,
                     ),
                     child: Text(
@@ -114,37 +115,51 @@ class _HomePageItemWidgetState extends State<HomePageItemWidget> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            width: 30,
-                            height: 30,
-                            margin: EdgeInsets.only(right: 10),
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(15)),
-                              image: DecorationImage(
-                                image: NetworkImage(widget.data.customerImg),
-                              ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ItemAuthorInfo(data: widget.data),
                             ),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          );
+                        },
+                        child: Container(
+                          child: Row(
                             children: [
-                              Text(widget.data.customerName,
-                                  style: GoogleFonts.roboto(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white)),
-                              Text(widget.data.customerRole,
-                                  style: GoogleFonts.roboto(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.normal,
-                                      color: Colors.grey.withOpacity(0.8)))
+                              Container(
+                                width: 30,
+                                height: 30,
+                                margin: EdgeInsets.only(right: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(15)),
+                                  image: DecorationImage(
+                                    image:
+                                        NetworkImage(widget.data.customerImg),
+                                  ),
+                                ),
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(widget.data.customerName,
+                                      style: GoogleFonts.roboto(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white)),
+                                  Text(widget.data.customerRole,
+                                      style: GoogleFonts.roboto(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.grey.withOpacity(0.8)))
+                                ],
+                              )
                             ],
-                          )
-                        ],
+                          ),
+                        ),
                       ),
                       Text(widget.data.time,
                           style: GoogleFonts.roboto(
