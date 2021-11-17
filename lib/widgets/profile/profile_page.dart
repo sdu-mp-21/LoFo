@@ -77,7 +77,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
             },
             child: Row(
               children: const [
-                Icon(Icons.phone),
+                Icon(Icons.favorite),
                 SizedBox(width: 5,),
                 Expanded(child: Text('Saved Posts', style: TextStyle(fontSize: 20),)),
                 Icon(Icons.chevron_right)
