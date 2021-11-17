@@ -3,6 +3,7 @@ import 'package:lofo_app/model/record.dart';
 import 'package:lofo_app/widgets/home/home_page_item.dart';
 import 'package:lofo_app/widgets/item_info/item_info_helper.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lofo_app/widgets/item_info/author_info.dart';
 
 class LoFoItemInfo extends StatefulWidget {
   final Record data;
@@ -71,7 +72,7 @@ class _LoFoItemInfoState extends State<LoFoItemInfo> {
                   ),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.location_on,
                         color: Colors.lightBlue,
                         size: 34,
@@ -105,38 +106,54 @@ class _LoFoItemInfoState extends State<LoFoItemInfo> {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: 60,
-                              height: 60,
-                              margin: EdgeInsets.only(right: 10),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(40)),
-                                image: DecorationImage(
-                                  image: NetworkImage(widget.data.customerImg),
-                                  fit: BoxFit.cover,
-                                ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ItemAuthorInfo(data: widget.data),
                               ),
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            );
+                          },
+                          child: Container(
+                            child: Row(
                               children: [
-                                Text(widget.data.customerName,
-                                    style: GoogleFonts.roboto(
-                                        fontSize: 19,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black)),
-                                Text(widget.data.customerRole,
-                                    style: GoogleFonts.roboto(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.grey.withOpacity(0.8)))
+                                Container(
+                                  width: 60,
+                                  height: 60,
+                                  margin: EdgeInsets.only(right: 10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(40)),
+                                    image: DecorationImage(
+                                      image:
+                                          NetworkImage(widget.data.customerImg),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(widget.data.customerName,
+                                        style: GoogleFonts.roboto(
+                                            fontSize: 19,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black)),
+                                    Text(widget.data.customerRole,
+                                        style: GoogleFonts.roboto(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal,
+                                            color:
+                                                Colors.grey.withOpacity(0.8)))
+                                  ],
+                                )
                               ],
-                            )
-                          ],
+                            ),
+                          ),
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
