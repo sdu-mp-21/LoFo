@@ -24,6 +24,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     ItemInfoData(
         'Acer Nitro 5', 'Found', 'Today', 'assets/image/acerNitro.jpg'),
   ];
+
+  List<String> categories = ['All', 'Mobiles', 'Documents', 'Laptops', 'Other'];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,8 +52,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       itemBuilder: (BuildContext context, int index) {
                         if(index%3==0){
                           return Column(
-                            children: [
-                              Text('Category ${index/3+1}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),),
+                            children: [ // 'Category ${index/3+1}'
+                              Text(categories[(index/3).toInt()], style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),),
                               GestureDetector(
                                   onTap: (){
                                     Navigator.push(
