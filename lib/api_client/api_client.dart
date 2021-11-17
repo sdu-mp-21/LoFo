@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 class ApiClient{
 
   Future<List<Record>> getPost() async {
-    final response = await http.get(Uri.parse('https://run.mocky.io/v3/54a0122c-3992-4f0f-bbdc-2933f2b3d110'));
+    final response = await http.get(Uri.parse('https://run.mocky.io/v3/74dccdaa-8545-43f6-8cc1-8805ca93f465'));
 
     if (response.statusCode == 200) {
       print(response);
