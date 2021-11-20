@@ -33,35 +33,55 @@ class _ItemAuthorInfoState extends State<ItemAuthorInfo> {
               Container(
                 child: Column(
                   children: [
-                    Container(
-                      padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                      height: 255,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(widget.data.customerImg),
-                          fit: BoxFit.cover,
+                    Stack(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                          height: 275,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(widget.data.image),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "1901031235577@stu.sdu.edu.kz",
-                            style: GoogleFonts.roboto(
-                                color: Colors.white,
-                                fontSize: 17,
-                                fontWeight: FontWeight.w600),
-                          )
-                        ],
-                      ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                          height: 275,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: <Color>[
+                                Colors.black.withOpacity(0.2),
+                                Colors.black.withOpacity(0.2),
+                                Colors.black.withOpacity(0.2)
+                              ],
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "1901031235577@stu.sdu.edu.kz",
+                                style: GoogleFonts.roboto(
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                     Container(
                       margin: EdgeInsets.only(bottom: 30),
                       decoration: new BoxDecoration(color: Colors.white),
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.fromLTRB(20, 10, 20, 25),
+                      padding: EdgeInsets.fromLTRB(20, 20, 20, 40),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -71,9 +91,12 @@ class _ItemAuthorInfoState extends State<ItemAuthorInfo> {
                             children: [
                               Text(widget.data.customerName,
                                   style: GoogleFonts.roboto(
-                                      fontSize: 17,
+                                      fontSize: 19,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black)),
+                              const SizedBox(
+                                height: 4,
+                              ),
                               Text(
                                 widget.data.customerRole,
                                 style: GoogleFonts.roboto(
@@ -87,70 +110,61 @@ class _ItemAuthorInfoState extends State<ItemAuthorInfo> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                  margin: EdgeInsets.only(right: 5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.lightBlue,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(25))),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.email,
-                                          size: 20,
-                                          color: Colors.white,
-                                        ),
-                                        onPressed: null,
-                                      ),
-                                    ],
-                                  )
-                                  // child: IconButton(
-                                  //     icon: Icon(
-                                  //       Icons.email,
-                                  //     ),
-                                  //     onPressed: () async {
-                                  //       const url =
-                                  //           'https://github.com/himanshusharma89';
-                                  //       if (await canLaunch(url)) {
-                                  //         await launch(url);
-                                  //       } else {
-                                  //         throw 'Could not launch $url';
-                                  //       }
-                                  //     }),
-                                  ),
-                              Container(
-                                margin: EdgeInsets.only(right: 5),
+                                margin: EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                    color: Colors.lightBlue,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(25))),
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.email,
-                                    size: 20,
-                                    color: Colors.white,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(25)),
+                                  image: DecorationImage(
+                                    image:
+                                        AssetImage('assets/image/whatsapp.png'),
+                                    fit: BoxFit.cover,
                                   ),
-                                  onPressed: null,
                                 ),
+                                height: 30,
+                                width: 30,
                               ),
                               Container(
-                                margin: EdgeInsets.only(right: 5),
+                                margin: EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                    color: Colors.lightBlue,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(25))),
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.email,
-                                    size: 20,
-                                    color: Colors.white,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(25)),
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/image/mail.png'),
+                                    fit: BoxFit.cover,
                                   ),
-                                  onPressed: null,
                                 ),
-                              )
+                                height: 30,
+                                width: 30,
+                              ),
+                              // Container(
+                              //   margin: EdgeInsets.only(right: 5),
+                              //   decoration: BoxDecoration(
+                              //       color: Colors.lightBlue,
+                              //       borderRadius:
+                              //           BorderRadius.all(Radius.circular(25))),
+                              //   child: IconButton(
+                              //     icon: Icon(
+                              //       Icons.email,
+                              //       size: 20,
+                              //       color: Colors.white,
+                              //     ),
+                              //     onPressed: null,
+                              //   ),
+                              // ),
+                              Container(
+                                margin: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(25)),
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/image/instagram.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                height: 30,
+                                width: 30,
+                              ),
                             ],
                           )
                         ],
@@ -165,6 +179,18 @@ class _ItemAuthorInfoState extends State<ItemAuthorInfo> {
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.fromLTRB(5, 0, 0, 15),
+                        child: Text(
+                          "Posts",
+                          style: GoogleFonts.roboto(
+                              fontSize: 19,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
                       Stack(
                         children: [
                           Container(
