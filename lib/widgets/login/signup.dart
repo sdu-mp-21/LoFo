@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lofo_app/widgets/login/signin.dart';
 import 'styled_widgets.dart';
 
 class SignupWidget extends StatefulWidget {
@@ -49,83 +50,124 @@ class _SignupWidgetState extends State<SignupWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          // CircleContainer(700, 700, Colors.lightBlue, 360, 100, -80),
-          // CircleContainer(400, 400, Colors.grey.withOpacity(0.8), 220, 360, 820),
-          ListView(children: [
-            Column(
-              children: <Widget>[
-                Column(
-                  children: [
-                    Column(children: [
-                      TextWidget("Create Account"),
-                    ]),
-                    Column(
-                      children: [
-                        TextFieldWidget(
-                          TextField(
-                            controller: name,
-                            decoration: getDec("Name", Icons.person, null),
-                          ),
-                        ),
-                        TextFieldWidget(
-                          TextField(
-                            controller: email,
-                            decoration: getDec("Your Email", Icons.email, null),
-                          ),
-                        ),
-                        TextFieldWidget(
-                          TextField(
-                            controller: email,
-                            decoration:
-                                getDec("Phone Number", Icons.phone, null),
-                          ),
-                        ),
-                        TextFieldWidget(
-                          TextField(
-                            controller: password,
-                            obscureText: hidePassword,
-                            decoration: getDec(
-                                "Password",
-                                Icons.lock,
-                                IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        hidePassword = !hidePassword;
-                                      });
-                                    },
-                                    color: Colors.black.withOpacity(0.4),
-                                    icon: Icon(hidePassword
-                                        ? Icons.visibility_off
-                                        : Icons.visibility))),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        ButtonWidget(
-                            "Sign Up", '/main', getList(name, email, password)),
-                      ],
-                    ),
-                  ],
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 10, right: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+      body: CustomPaint(
+        painter: BackgroundSignUp(),
+        child: Stack(
+          children: [
+            // CircleContainer(700, 700, Colors.lightBlue, 360, 100, -80),
+            // CircleContainer(400, 400, Colors.grey.withOpacity(0.8), 220, 360, 820),
+            ListView(children: [
+              Column(
+                children: <Widget>[
+                  Column(
                     children: [
-                      TextButtonWidget("Sign In", '/login'),
+                      TextWidgetWhiteSignUp("Create Account"),
+                      Column(
+                        children: [
+                          TextFieldWidget(
+                            TextField(
+                              controller: name,
+                              decoration: getDec("Name", Icons.person, null),
+                            ),
+                          ),
+                          TextFieldWidget(
+                            TextField(
+                              controller: email,
+                              decoration: getDec("Your Email", Icons.email, null),
+                            ),
+                          ),
+                          TextFieldWidget(
+                            TextField(
+                              controller: email,
+                              decoration:
+                              getDec("Phone Number", Icons.phone, null),
+                            ),
+                          ),
+                          TextFieldWidget(
+                            TextField(
+                              controller: password,
+                              obscureText: hidePassword,
+                              decoration: getDec(
+                                  "Password",
+                                  Icons.lock,
+                                  IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          hidePassword = !hidePassword;
+                                        });
+                                      },
+                                      color: Colors.black.withOpacity(0.4),
+                                      icon: Icon(hidePassword
+                                          ? Icons.visibility_off
+                                          : Icons.visibility))),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          ButtonWidget(
+                              "Sign Up", '/main', getList(name, email, password)),
+                        ],
+                      ),
                     ],
                   ),
-                ),
-              ],
-            ),
-          ])
-        ],
-      ),
+                  Container(
+                    padding: const EdgeInsets.only(top: 10, right: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        TextButtonWidget("Sign In", '/login'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ])
+          ],
+        ),
+      )
     );
+  }
+}
+
+class BackgroundSignUp extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var sw = size.width;
+    var sh = size.height;
+    var paint = Paint();
+    final Color color = HexColor.fromHex('#B6B3B3');
+
+
+    Path mainBackground = Path();
+    mainBackground.addRect(Rect.fromLTRB(0, 0, sw, sh));
+    paint.color = Colors.grey.shade100;
+    canvas.drawPath(mainBackground, paint);
+
+    // Blue
+    Path blueWave = Path();
+    blueWave.lineTo(sw, 0);
+    blueWave.lineTo(sw, sh * 0.65);
+    blueWave.cubicTo(sw * 0.8, sh * 0.8, sw * 0.5, sh * 0.8, sw * 0.45, sh);
+    blueWave.lineTo(0, sh);
+    blueWave.close();
+    paint.color = Colors.lightBlue.shade300;
+    canvas.drawPath(blueWave, paint);
+
+    // Grey
+    Path greyPath = Path();
+    greyPath.lineTo(sw, 0);
+    greyPath.lineTo(sw, sh * 0.3);
+    greyPath.cubicTo(sw * 0.65, sh * 0.45, sw * 0.25, sh * 0.35, 0, sh * 0.5);
+    greyPath.close();
+    paint.color = color;
+    canvas.drawPath(greyPath, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return oldDelegate != this;
   }
 }
