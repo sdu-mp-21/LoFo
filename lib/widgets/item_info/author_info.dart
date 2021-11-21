@@ -10,6 +10,7 @@ import 'package:lofo_app/api_client/api_client.dart';
 import 'package:lofo_app/widgets/home/home_page_item.dart';
 import 'package:lofo_app/widgets/home/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:lofo_app/widgets/item_info/item_info.dart';
 
 class ItemAuthorInfo extends StatefulWidget {
   final Record data;
@@ -167,14 +168,6 @@ class _ItemAuthorInfoState extends State<ItemAuthorInfo> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  print(author_posts.length);
-                                  for (var i = 0;
-                                      i < author_posts.length;
-                                      i++) {
-                                    print(author_posts[i].customerName +
-                                        " " +
-                                        author_posts[i].title);
-                                  }
                                   launchURL(
                                       'https://www.instagram.com/flutter.developers/');
                                 },
@@ -222,9 +215,20 @@ class _ItemAuthorInfoState extends State<ItemAuthorInfo> {
                           physics: const BouncingScrollPhysics(),
                           itemCount: author_posts.length,
                           itemBuilder: (context, index) {
-                            return AuthorItemHelper(
-                              data: author_posts[index],
-                            );
+                            return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => LoFoItemInfo(
+                                          data: author_posts[index]),
+                                    ),
+                                  );
+                                  // Navigator.of(context).pushNamed('/item_information');
+                                },
+                                child: AuthorItemHelper(
+                                  data: author_posts[index],
+                                ));
                           }),
                     )
                   : const Center(
