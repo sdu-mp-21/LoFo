@@ -34,7 +34,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     } else if (index == 1) {
       actionBarTitle = 'Add Item';
     } else {
-      actionBarTitle = 'My Profile';
+      actionBarTitle = 'Profile';
     }
   }
 
