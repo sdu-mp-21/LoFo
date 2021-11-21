@@ -1,6 +1,15 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:lofo_app/model/author_posts.dart';
 import 'package:lofo_app/model/record.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lofo_app/model/saved_posts.dart';
+import 'package:lofo_app/widgets/item_info/author_item_helper.dart';
+import 'package:lofo_app/api_client/api_client.dart';
+import 'package:lofo_app/widgets/home/home_page_item.dart';
+import 'package:lofo_app/widgets/home/home_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ItemAuthorInfo extends StatefulWidget {
   final Record data;
@@ -11,24 +20,32 @@ class ItemAuthorInfo extends StatefulWidget {
 }
 
 class _ItemAuthorInfoState extends State<ItemAuthorInfo> {
+  List<Record> author_posts = [];
   @override
   Widget build(BuildContext context) {
+    launchURL(String url) async {
+      if (!await launch(url)) throw 'Could not launch $url';
+    }
+
+    author_posts = getAuthorPosts(widget.data.customerName).toList();
+    var post_index;
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.data.customerName,
-              style: GoogleFonts.roboto(
-                  fontSize: 19,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black)),
-          centerTitle: true,
-          elevation: 0,
-          //backgroundColor: Colors.blueAccent.withOpacity(0.1),
-          backgroundColor: Colors.grey.withOpacity(0.7),
-          foregroundColor: Colors.white,
-        ),
-        body: Container(
+      appBar: AppBar(
+        title: Text(widget.data.customerName,
+            style: GoogleFonts.roboto(
+                fontSize: 19,
+                fontWeight: FontWeight.bold,
+                color: Colors.black)),
+        centerTitle: true,
+        elevation: 0,
+        //backgroundColor: Colors.blueAccent.withOpacity(0.1),
+        backgroundColor: Colors.grey.withOpacity(0.7),
+        foregroundColor: Colors.white,
+      ),
+      body: Container(
           decoration: new BoxDecoration(color: Colors.grey.withOpacity(0.7)),
           child: Column(
+            // physics: BouncingScrollPhysics(),
             children: [
               Container(
                 child: Column(
@@ -41,7 +58,7 @@ class _ItemAuthorInfoState extends State<ItemAuthorInfo> {
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: NetworkImage(widget.data.image),
+                              image: NetworkImage(widget.data.customerImg),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -109,61 +126,72 @@ class _ItemAuthorInfoState extends State<ItemAuthorInfo> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                margin: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(25)),
-                                  image: DecorationImage(
-                                    image:
-                                        AssetImage('assets/image/whatsapp.png'),
-                                    fit: BoxFit.cover,
+                              GestureDetector(
+                                  onTap: () {
+                                    launchURL(
+                                        'https://api.whatsapp.com/send/?phone=77089373529&text&app_absent=0');
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(25)),
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/image/whatsapp.png'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    height: 30,
+                                    width: 30,
+                                  )),
+                              GestureDetector(
+                                onTap: () {
+                                  launchURL(
+                                      'https://mail.google.com/mail/u/0/#inbox');
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(25)),
+                                    image: DecorationImage(
+                                      image:
+                                          AssetImage('assets/image/mail.png'),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
+                                  height: 30,
+                                  width: 30,
                                 ),
-                                height: 30,
-                                width: 30,
                               ),
-                              Container(
-                                margin: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(25)),
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/image/mail.png'),
-                                    fit: BoxFit.cover,
+                              GestureDetector(
+                                onTap: () {
+                                  print(author_posts.length);
+                                  for (var i = 0;
+                                      i < author_posts.length;
+                                      i++) {
+                                    print(author_posts[i].customerName +
+                                        " " +
+                                        author_posts[i].title);
+                                  }
+                                  launchURL(
+                                      'https://www.instagram.com/flutter.developers/');
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(25)),
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          'assets/image/instagram.png'),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
+                                  height: 30,
+                                  width: 30,
                                 ),
-                                height: 30,
-                                width: 30,
-                              ),
-                              // Container(
-                              //   margin: EdgeInsets.only(right: 5),
-                              //   decoration: BoxDecoration(
-                              //       color: Colors.lightBlue,
-                              //       borderRadius:
-                              //           BorderRadius.all(Radius.circular(25))),
-                              //   child: IconButton(
-                              //     icon: Icon(
-                              //       Icons.email,
-                              //       size: 20,
-                              //       color: Colors.white,
-                              //     ),
-                              //     onPressed: null,
-                              //   ),
-                              // ),
-                              Container(
-                                margin: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(25)),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                        'assets/image/instagram.png'),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                height: 30,
-                                width: 30,
                               ),
                             ],
                           )
@@ -173,131 +201,82 @@ class _ItemAuthorInfoState extends State<ItemAuthorInfo> {
                   ],
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(20),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.fromLTRB(5, 0, 0, 15),
-                        child: Text(
-                          "Posts",
-                          style: GoogleFonts.roboto(
-                              fontSize: 19,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                      Stack(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(20)),
-                              image: DecorationImage(
-                                image: NetworkImage(widget.data.image),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            height: 208,
-                            width: MediaQuery.of(context).size.width,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: <Color>[
-                                  Colors.black.withOpacity(0.1),
-                                  Colors.black.withOpacity(0.5),
-                                  Colors.black.withOpacity(0.9)
-                                ],
-                              ),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(20)),
-                            ),
-                            height: 208,
-                            width: MediaQuery.of(context).size.width,
-                            padding: const EdgeInsets.all(15),
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(15, 15, 15, 10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    widget.data.title,
-                                    style: GoogleFonts.roboto(
-                                        fontSize: 19,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.location_on,
-                                        color: Colors.grey.withOpacity(0.6),
-                                        size: 25,
-                                      ),
-                                      Text(widget.data.place,
-                                          style: GoogleFonts.roboto(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.normal,
-                                              color:
-                                                  Colors.grey.withOpacity(0.8)))
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 40,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            15, 4, 15, 4),
-                                        decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(17)),
-                                          color: Colors.lightBlue,
-                                        ),
-                                        child: Text(
-                                          widget.data.status,
-                                          style: GoogleFonts.roboto(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                      Text(widget.data.time,
-                                          style: GoogleFonts.roboto(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.normal,
-                                              color:
-                                                  Colors.grey.withOpacity(0.8)))
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+              Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Container(
+                  padding: EdgeInsets.all(10),
+                  width: MediaQuery.of(context).size.width,
+                  child: Text(
+                    "All Posts",
+                    style: GoogleFonts.roboto(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-              ),
+              ]),
+              (author_posts.isNotEmpty)
+                  ? Expanded(
+                      child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: author_posts.length,
+                          itemBuilder: (context, index) {
+                            return AuthorItemHelper(
+                              data: author_posts[index],
+                            );
+                          }),
+                    )
+                  : const Center(
+                      child: Text(
+                      'There is no post',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                    ))
+              // Container(
+              //   padding: EdgeInsets.all(20),
+              // child: Column(
+              //   children: [
+              //     Container(
+              //       width: MediaQuery.of(context).size.width,
+              //       margin: EdgeInsets.fromLTRB(5, 0, 0, 15),
+              //       child: Text(
+              //         "Posts",
+              //         style: GoogleFonts.roboto(
+              //             fontSize: 19,
+              //             fontWeight: FontWeight.bold,
+              //             color: Colors.black),
+              //         textAlign: TextAlign.left,
+              //       ),
+              //     ),
+              //     AuthorItemHelper(data: widget.data),
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       (author_posts.isNotEmpty)
+              //           ? Expanded(
+              //               child: ListView.builder(
+              //                   physics: const BouncingScrollPhysics(),
+              //                   itemCount: author_posts.length,
+              //                   itemBuilder: (context, index) {
+              //                     return AuthorItemHelper(
+              //                       data: author_posts[index],
+              //                     );
+              //                   }),
+              //             )
+              //           : const Center(
+              //               child: Text(
+              //               'There is no post',
+              //               style: TextStyle(
+              //                   fontSize: 20, fontWeight: FontWeight.w700),
+              //             ))
+              //     ],
+              //   ),
+              //   //     ],
+              // ),
+              //),
             ],
-          ),
-        ));
+          )),
+    );
   }
 }
