@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lofo_app/api_client/api_client.dart';
 import 'package:lofo_app/widgets/profile/change_data/change_data.dart';
@@ -8,8 +9,12 @@ import 'widgets/intro_slider.dart';
 import 'widgets/login/signin.dart';
 import 'widgets/login/signup.dart';
 
-void main() async{
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   allRecords = await ApiClient().getPost();
+
+  await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 

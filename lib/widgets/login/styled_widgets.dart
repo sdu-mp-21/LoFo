@@ -39,6 +39,7 @@ class TextFieldWidget extends StatelessWidget {
       padding: EdgeInsets.all(10),
       child: Material(
         color: Colors.grey.withOpacity(0),
+        // color: Colors.transparent,
         child: child,
       ),
     );

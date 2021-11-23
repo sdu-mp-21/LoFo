@@ -6,9 +6,8 @@ import 'package:lofo_app/model/record.dart';
 import 'package:http/http.dart' as http;
 
 class ApiClient{
-
   Future<List<Record>> getPost() async {
-    final response = await http.get(Uri.parse('https://run.mocky.io/v3/54a0122c-3992-4f0f-bbdc-2933f2b3d110'));
+    final response = await http.get(Uri.parse('https://run.mocky.io/v3/14c6185c-a7b7-4778-b483-e04c167c28b9'));
 
     if (response.statusCode == 200) {
       print(response);

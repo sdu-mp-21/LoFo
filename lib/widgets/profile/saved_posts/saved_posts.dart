@@ -49,10 +49,27 @@ class _SavedPostsPageState extends State<SavedPostsPage> {
               physics: const BouncingScrollPhysics(),
               itemCount: saved_posts.length,
               itemBuilder: (context, index){
-                return HomePageItemWidget(data: saved_posts[index],);
+                return Dismissible(
+                  key: UniqueKey(),
+                  onDismissed: (direction) {
+                    setState(() {
+                      saved_posts_by_id.removeAt(index);
+                    });
+                  },
+                  background: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: const [
+                      Text('Delete Post', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),),
+                      SizedBox(width: 10,),
+                      Icon(Icons.delete, color: Colors.red,),
+                      SizedBox(width: 20,),
+                    ],
+                  ),
+                  child: HomePageItemWidget(data: saved_posts[index],)
+                );
               }
             ),
-          ):const Center(child: Text('There is no saved post', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),))
+          ):const Center(child: Text('There is no saved post', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),))
         ],
       ),
       // body: Expanded(

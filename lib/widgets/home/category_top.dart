@@ -86,7 +86,7 @@ class _TopListviewWidgetState extends State<TopListviewWidget> {
               height: 43,
               alignment: Alignment.center,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text('Documents',style: TextStyle(color: (isActive[2]==true)?Colors.white:Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
               ),
               decoration: BoxDecoration(
