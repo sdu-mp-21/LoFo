@@ -42,7 +42,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     } else if (index == 1) {
       actionBarTitle = 'Create Post';
     } else {
-      actionBarTitle = 'My Profile';
+      actionBarTitle = 'Profile';
     }
   }
 

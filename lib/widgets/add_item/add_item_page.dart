@@ -1,8 +1,13 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:path/path.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:lofo_app/colors/basic_colors.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
 class AddItemPageWidget extends StatefulWidget {
   const AddItemPageWidget({Key? key}) : super(key: key);
@@ -13,11 +18,63 @@ class AddItemPageWidget extends StatefulWidget {
 
 class _AddItemPageWidgetState extends State<AddItemPageWidget> {
   static const Color tealGreen = Color.fromRGBO(0, 180, 171,1);
-
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final placeController = TextEditingController();
+  final date = MaskedTextController(mask: '00.00.0000');
 
   String dropdownValue = 'Mobile';
   String type = 'Lost';
   File? imageFile;
+
+  var _validateDescription = false;
+  var _validateTitle = false;
+  var _validateDate = false;
+  var _validatePlace = false;
+
+  String message = '';
+
+  Future uploadImageToFirebase() async {
+    print(imageFile);
+    print(imageFile==null);
+    if(imageFile!=null){
+      String fileName = basename(imageFile!.path);
+      FirebaseStorage storage = FirebaseStorage.instance;
+      Reference ref = storage.ref(fileName);
+      print('Uploading file please wait');
+      ref.putFile(imageFile!).then((TaskSnapshot result){
+        if(result.state == TaskState.success){
+          print('Successfully uploaded');
+        }else{
+          print('Error uploading file');
+        }
+      });
+    }
+  }
+
+  void createPostFirebase(){
+    print('createPostFirebase');
+    FirebaseFirestore.instance.collection('posts').add(
+      {
+        'title': titleController.text,
+        'description': descriptionController.text,
+        'date': date.text,
+        'place': placeController.text,
+        'type': type,
+        'category': dropdownValue,
+      }
+    );
+    uploadImageToFirebase();
+  }
+
+  bool checkFilled(){
+    if(titleController.text.isNotEmpty && descriptionController.text.isNotEmpty
+        && placeController.text.isNotEmpty && (date.text.length == 10)){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
   void changeType(String newType){
     type = newType;
@@ -69,7 +126,7 @@ class _AddItemPageWidgetState extends State<AddItemPageWidget> {
                         color: BasicColors.bgColor
                       ),
                       child: const Center(
-                        child: Text('Add Photo'),
+                        child: Text('Click here to pick image from gallery'),
                       ),
                     ):Image.file(imageFile!),
                   ),
@@ -148,11 +205,13 @@ class _AddItemPageWidgetState extends State<AddItemPageWidget> {
                     borderRadius: BorderRadius.all(Radius.circular(12)),
                     color: BasicColors.bgColor
                   ),
-                  child: const TextField(
+                  child: TextField(
+                    controller: titleController,
                     maxLines: null,
                     decoration: InputDecoration(
+                      errorText: _validateTitle ? 'Value Can\'t Be Empty' : null,
                       isDense: true,
-                      contentPadding: EdgeInsets.all(20.0),
+                      contentPadding: const EdgeInsets.all(20.0),
                       border: InputBorder.none,
                     ),
                   ),
@@ -170,11 +229,13 @@ class _AddItemPageWidgetState extends State<AddItemPageWidget> {
                     borderRadius: BorderRadius.all(Radius.circular(12)),
                     color: BasicColors.bgColor
                   ),
-                  child: const TextField(
+                  child: TextField(
+                    controller: descriptionController,
                     maxLines: null,
                     decoration: InputDecoration(
+                      errorText: _validateDescription ? 'Value Can\'t Be Empty' : null,
                       isDense: true,
-                      contentPadding: EdgeInsets.all(20.0),
+                      contentPadding: const EdgeInsets.all(20.0),
                       border: InputBorder.none,
                     ),
                   ),
@@ -193,19 +254,26 @@ class _AddItemPageWidgetState extends State<AddItemPageWidget> {
                         const Text('Date', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
                         const SizedBox(height: 10,),
                         Container(
-                          width: 100,
+                          width: 110,
                           decoration: const BoxDecoration(
                               borderRadius: BorderRadius.all(Radius.circular(12)),
                               color: BasicColors.bgColor
                           ),
-                          child: const TextField(
+                          child: TextField(
+                            controller: date,
                             maxLines: null,
                             decoration: InputDecoration(
+                              errorText: _validateDate ? 'Should be 8\n digits' : null,
                               isDense: true,
-                              contentPadding: EdgeInsets.all(10.0),
+                              contentPadding: const EdgeInsets.all(10.0),
                               border: InputBorder.none,
                             ),
                           ),
+                        ),
+                        const SizedBox(height: 3,),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Text('DD.MM.YYYY', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),),
                         ),
                       ],
                     ),
@@ -221,14 +289,21 @@ class _AddItemPageWidgetState extends State<AddItemPageWidget> {
                                 borderRadius: BorderRadius.all(Radius.circular(12)),
                                 color: BasicColors.bgColor
                             ),
-                            child: const TextField(
+                            child: TextField(
+                              controller: placeController,
                               maxLines: null,
                               decoration: InputDecoration(
+                                errorText: _validatePlace ? 'Fill this' : null,
                                 isDense: true,
-                                contentPadding: EdgeInsets.all(10.0),
+                                contentPadding: const EdgeInsets.all(10.0),
                                 border: InputBorder.none,
                               ),
                             ),
+                          ),
+                          const SizedBox(height: 3,),
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text('Where you lose/found', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),),
                           ),
                         ],
                       ),
@@ -236,14 +311,27 @@ class _AddItemPageWidgetState extends State<AddItemPageWidget> {
                   ],
                 ),
                 const SizedBox(height: 20,),
-                Container(
-                  height: 50,
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(999)),
-                    color: tealGreen
+                GestureDetector(
+                  onTap: (){
+                    if(checkFilled()){
+                      createPostFirebase();
+                      Navigator.of(context).pop();
+                    }
+                    descriptionController.text.isEmpty ? _validateDescription = true : _validateDescription = false;
+                    titleController.text.isEmpty ? _validateTitle = true : _validateTitle = false;
+                    date.text.length != 10 ? _validateDate = true : _validateDate = false;
+                    placeController.text.isEmpty ? _validatePlace = true : _validatePlace = false;
+                    setState(() {});
+                  },
+                  child: Container(
+                    height: 50,
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(999)),
+                      color: tealGreen
+                    ),
+                    child: const Center(child: Text('Create Post', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),)),
                   ),
-                  child: const Center(child: Text('Create Post', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),)),
                 ),
                 const SizedBox(height: 20,),
               ],

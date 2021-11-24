@@ -9,6 +9,8 @@ import 'widgets/intro_slider.dart';
 import 'widgets/login/signin.dart';
 import 'widgets/login/signup.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   allRecords = await ApiClient().getPost();
@@ -17,6 +19,11 @@ Future<void> main() async{
 
   runApp(const MyApp());
 }
+
+// void initFirebase() async{
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp();
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
