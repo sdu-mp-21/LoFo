@@ -1,14 +1,29 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lofo_app/api_client/api_client.dart';
 import 'package:lofo_app/widgets/profile/change_data/change_data.dart';
+import 'package:lofo_app/widgets/profile/saved_posts/saved_posts.dart';
+import 'model/saved_posts.dart';
 import 'widgets/home.dart';
 import 'widgets/intro_slider.dart';
 import 'widgets/login/signin.dart';
 import 'widgets/login/signup.dart';
 
-void main() {
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  allRecords = await ApiClient().getPost();
+
+  await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
+
+// void initFirebase() async{
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp();
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -29,6 +44,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const SigninWidget(),
         '/signup': (context) => const SignupWidget(),
         '/change_data': (context) => const ChangeDataPage(),
+        '/saved_posts': (context) => const SavedPostsPage(),
       },
     );
   }

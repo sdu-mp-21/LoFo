@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "966626980654",
+    "project_id": "lost-and-found-sdu",
+    "storage_bucket": "lost-and-found-sdu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:966626980654:android:fb9dda627d51d462eac0bf",
+        "android_client_info": {
+          "package_name": "com.example.lofo_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "966626980654-nm8mc7pp4u9m44rdte2mv03v3gkrr04l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt0QZSTDw4hEaxaOe15X5VDOzLioqW1H0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "966626980654-nm8mc7pp4u9m44rdte2mv03v3gkrr04l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

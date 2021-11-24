@@ -41,9 +41,9 @@ class _TopListviewWidgetState extends State<TopListviewWidget> {
             child: Container(
               height: 43,
               alignment: Alignment.center,
-              child: const Padding(
+              child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text('All',style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
+                child: Text('All',style: TextStyle(color: (isActive[0]==true)?Colors.white:Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
               ),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(999)),
@@ -56,20 +56,20 @@ class _TopListviewWidgetState extends State<TopListviewWidget> {
             onTap: (){
               _changeActive(1);
               widget.controller.animateTo(
-                  700,
+                  730,
                   duration: Duration(milliseconds: 1000),
                   curve: Curves.easeInOut);
             },
             child: Container(
               height: 43,
               alignment: Alignment.center,
-              child: const Padding(
+              child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text('Mobile',style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
+                child: Text('Mobile',style: TextStyle(color: (isActive[1]==true)?Colors.white:Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
               ),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(999)),
-                  color: (isActive[1]==true)?Colors.blue:Color.fromRGBO(214, 214, 214, 0.8)
+                  color: (isActive[1]==true)?Colors.lightBlue:Color.fromRGBO(214, 214, 214, 0.8)
               ),
             ),
           ),
@@ -78,16 +78,16 @@ class _TopListviewWidgetState extends State<TopListviewWidget> {
             onTap: (){
               _changeActive(2);
               widget.controller.animateTo(
-                  1450,
+                  1460,
                   duration: Duration(milliseconds: 1000),
                   curve: Curves.easeInOut);
             },
             child: Container(
               height: 43,
               alignment: Alignment.center,
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text('Documents',style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text('Documents',style: TextStyle(color: (isActive[2]==true)?Colors.white:Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
               ),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(999)),
@@ -100,16 +100,16 @@ class _TopListviewWidgetState extends State<TopListviewWidget> {
             onTap: (){
               _changeActive(3);
               widget.controller.animateTo(
-                  2150,
+                  2200,
                   duration: Duration(milliseconds: 1000),
                   curve: Curves.easeInOut);
             },
             child: Container(
               height: 43,
               alignment: Alignment.center,
-              child: const Padding(
+              child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text('Laptop',style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
+                child: Text('Laptop',style: TextStyle(color: (isActive[3]==true)?Colors.white:Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
               ),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(999)),
@@ -122,16 +122,16 @@ class _TopListviewWidgetState extends State<TopListviewWidget> {
             onTap: (){
               _changeActive(4);
               widget.controller.animateTo(
-                  2850,
+                  2940,
                   duration: Duration(milliseconds: 1000),
                   curve: Curves.easeInOut);
             },
             child: Container(
               height: 43,
               alignment: Alignment.center,
-              child: const Padding(
+              child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text('Other',style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
+                child: Text('Other',style: TextStyle(color: (isActive[4]==true)?Colors.white:Colors.black,fontSize: 16,fontWeight: FontWeight.w700),),
               ),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(999)),

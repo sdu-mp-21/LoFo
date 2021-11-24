@@ -1,12 +1,13 @@
-
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:path/path.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
+import 'package:lofo_app/colors/basic_colors.dart';
 import 'package:image_picker/image_picker.dart';
-
-import 'package:lofo_app/widgets/login/styled_widgets.dart';
-
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
 class AddItemPageWidget extends StatefulWidget {
   const AddItemPageWidget({Key? key}) : super(key: key);
@@ -16,143 +17,147 @@ class AddItemPageWidget extends StatefulWidget {
 }
 
 class _AddItemPageWidgetState extends State<AddItemPageWidget> {
+  static const Color tealGreen = Color.fromRGBO(0, 180, 171,1);
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final placeController = TextEditingController();
+  final date = MaskedTextController(mask: '00.00.0000');
 
-  String dropdownValue = 'Lost';
-  File? _selectedFile;
+  String dropdownValue = 'Mobile';
+  String type = 'Lost';
+  File? imageFile;
 
-  Widget getImageWidget(){
-    if(null == _selectedFile){
-      return Image.asset(
-        "assets/image/add.png",
-        width: 300,
-        height: 105,
-        fit: BoxFit.cover,
-      );
-    }
-    else{
-      return Image.file(
-        _selectedFile!,
-        width: 300,
-        height: 105,
-        fit: BoxFit.cover,
-      );
-    }
-  }
+  var _validateDescription = false;
+  var _validateTitle = false;
+  var _validateDate = false;
+  var _validatePlace = false;
 
-  getImage(ImageSource imageSource) async {
-    // File image = await ImagePicker.pickImage(source: ImageSource.camera);
-    final ImagePicker _picker = ImagePicker();
-    XFile? image = await _picker.pickImage(source: imageSource);
-    if (image != null){
-      File? cropped = await ImageCropper.cropImage(sourcePath: image.path,
-          aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
-          compressQuality: 100,
-          maxWidth: 700,
-          maxHeight: 700,
-          compressFormat: ImageCompressFormat.jpg,
-          androidUiSettings: const AndroidUiSettings(
-            toolbarColor: Colors.blue,
-            toolbarTitle: "RPS Cropper",
-            statusBarColor: Colors.blue,
-            backgroundColor: Colors.white,
-          )
-      );
-      setState(() {
-        _selectedFile = cropped;
+  String message = '';
+
+  Future uploadImageToFirebase() async {
+    print(imageFile);
+    print(imageFile==null);
+    if(imageFile!=null){
+      String fileName = basename(imageFile!.path);
+      FirebaseStorage storage = FirebaseStorage.instance;
+      Reference ref = storage.ref(fileName);
+      print('Uploading file please wait');
+      ref.putFile(imageFile!).then((TaskSnapshot result){
+        if(result.state == TaskState.success){
+          print('Successfully uploaded');
+        }else{
+          print('Error uploading file');
+        }
       });
     }
-
-
   }
 
-  List <String> spinnerItems = ['Lost', 'Found'] ;
-
-  void changed(String data){
-    setState(() {
-      dropdownValue = data;
-    });
+  void createPostFirebase(){
+    print('createPostFirebase');
+    FirebaseFirestore.instance.collection('posts').add(
+      {
+        'title': titleController.text,
+        'description': descriptionController.text,
+        'date': date.text,
+        'place': placeController.text,
+        'type': type,
+        'category': dropdownValue,
+      }
+    );
+    uploadImageToFirebase();
   }
+
+  bool checkFilled(){
+    if(titleController.text.isNotEmpty && descriptionController.text.isNotEmpty
+        && placeController.text.isNotEmpty && (date.text.length == 10)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  void changeType(String newType){
+    type = newType;
+    setState(() {});
+  }
+
+  void pickImage() async{
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if(image!=null){
+      imageFile = File(image.path);
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset : false,
-        body: Container(color: Colors.blueAccent.withOpacity(0.1),
-          child:
-          SingleChildScrollView(
+      body: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    getImageWidget()
-                    // Image.asset('assets/image/add.png')//assets/image/add.png
-                  ],
-                ),
-                Padding(padding: EdgeInsets.only(top: 10),),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(onPressed: () {getImage(ImageSource.camera);
-                    }, child:Text("from camera", style: TextStyle(color: Colors.white))),
-                    ElevatedButton(onPressed:(){ getImage(ImageSource.gallery);
-                    }, child:Text("from device", style: TextStyle(color: Colors.white),)),
-                  ],
-                ),
-                Padding(padding: EdgeInsets.only(top: 10),),
-                const Text("Description", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                Padding(padding: EdgeInsets.only(top: 10),),
-                const SizedBox(
-                  width: 325,
-                  height: 50,
-                  child: TextField(
-                    cursorColor: Color(0xffC19354),
-
-                    // controller: _weightController,
-                    decoration: InputDecoration(
-                        hoverColor: Color(0xffC19354),
-                        focusColor: Color(0xffC19354),
-                        // hintText: "weight (kilograms)",
-                        labelText: "Title",
-                        // labelStyle:
-                        border: OutlineInputBorder()),
-                    keyboardType: TextInputType.text,
-                    obscureText: false,
-                    // maxLines: 3,
-                    // maxLines: 3,
-                    // suffixIcon:
+                const SizedBox(height: 40,),
+                GestureDetector(
+                  onTap: ()=> Navigator.of(context).pop(),
+                  child: Row(
+                    children: const [
+                      Icon(Icons.chevron_left),
+                      Text('Go back', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),),
+                    ],
                   ),
                 ),
-                Padding(padding: EdgeInsets.only(top: 20),),
-
-                Padding(
-                  padding: const EdgeInsets.only(left: 35,right: 35),
-                  child: Container(
-                    padding: EdgeInsets.only(left: 16, right: 16),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black26, width: 1),
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: DropdownButton<String>(
-                      value: dropdownValue,
-                      dropdownColor: Colors.white,
-                      icon: Icon(Icons.arrow_drop_down),
-                      iconSize: 24,
-                      isExpanded: true,
-                      underline: SizedBox(
+                const Text('Create Post', style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),),
+                const SizedBox(height: 30,),
+                GestureDetector(
+                  onTap: pickImage,
+                  child: Center(
+                    child: (imageFile==null)?Container(
+                      height: 100,
+                      // width: 300,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        color: BasicColors.bgColor
                       ),
-                      // elevation: 16,
-                      // style: TextStyle(color: Colors.lightBlueAccent, fontSize: 14),
-                      // underline: Container(
-                      //   height: 2,
-                      //   color: Colors.lightBlueAccent,
-                      // ),
-                      onChanged: (newValue){
-                        setState((){
+                      child: const Center(
+                        child: Text('Click here to pick image from gallery'),
+                      ),
+                    ):Image.file(imageFile!),
+                  ),
+                ),
+                const SizedBox(height: 20,),
+                const Text('Category', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                const SizedBox(height: 7,),
+                Container(
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                      color: BasicColors.bgColor
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      alignment: AlignmentDirectional.center,
+                      value: dropdownValue,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      iconSize: 24,
+                      elevation: 0,
+                      style: const TextStyle(color: Colors.black),
+                      underline: const SizedBox(),
+                      onChanged: (String? newValue) {
+                        setState(() {
                           dropdownValue = newValue!;
                         });
                       },
-                      items: spinnerItems.map((String value) {
-                        return DropdownMenuItem(
+                      items: <String>['Mobile','Document', 'Laptop', 'Other']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
                         );
@@ -160,84 +165,180 @@ class _AddItemPageWidgetState extends State<AddItemPageWidget> {
                     ),
                   ),
                 ),
-                Padding(padding: EdgeInsets.only(top: 20),),
-
-                const SizedBox(
-                  width: 325,
-                  height: 50,
-                  child: TextField(
-                    cursorColor: Color(0xffC19354),
-
-                    // controller: _weightController,
-                    decoration: InputDecoration(
-                        hoverColor: Color(0xffC19354),
-                        focusColor: Color(0xffC19354),
-                        // hintText: "weight (kilograms)",
-                        labelText: "Time",
-                        // labelStyle:
-                        border: OutlineInputBorder()),
-                    keyboardType: TextInputType.datetime,
-                    obscureText: false,
-                    // maxLines: 3,
-                    // maxLines: 3,
-                    // suffixIcon:
-                  ),
+                const SizedBox(height: 20,),
+                const Text('Post Type', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                const SizedBox(height: 15,),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => changeType('Lost'),
+                      child: Container(
+                        height: 35,
+                        width: 70,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(Radius.circular(8)),
+                          color: (type=='Lost')?tealGreen:Colors.grey.withOpacity(0.2)
+                        ),
+                        child: Center(child: Text('Lost', style: TextStyle(color: (type=='Lost')?Colors.white:Colors.black, fontSize: 16, fontWeight: FontWeight.w600))),
+                      ),
+                    ),
+                    const SizedBox(width: 10,),
+                    GestureDetector(
+                      onTap: () => changeType('Found'),
+                      child: Container(
+                        height: 35,
+                        width: 70,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(Radius.circular(8)),
+                          color: (type=='Found')?tealGreen:Colors.grey.withOpacity(0.2)
+                        ),
+                        child: Center(child: Text('Found', style: TextStyle(color: (type=='Found')?Colors.white:Colors.black, fontSize: 16, fontWeight: FontWeight.w600))),
+                      ),
+                    ),
+                  ],
                 ),
-                Padding(padding: EdgeInsets.only(top: 20),),
-                const SizedBox(
-                  width: 325,
-                  height: 50,
-                  child: TextField(
-                    cursorColor: Color(0xffC19354),
-
-                    // controller: _weightController,
-                    decoration: InputDecoration(
-                        hoverColor: Color(0xffC19354),
-                        focusColor: Color(0xffC19354),
-                        // hintText: "weight (kilograms)",
-                        labelText: "Place",
-                        // labelStyle:
-                        border: OutlineInputBorder()),
-                    keyboardType: TextInputType.streetAddress,
-                    obscureText: false,
-                    // maxLines: 3,
-                    // maxLines: 3,
-                    // suffixIcon:
+                const SizedBox(height: 20,),
+                const Text('Title', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                const SizedBox(height: 10,),
+                Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    color: BasicColors.bgColor
                   ),
-                ),
-
-                Padding(padding: EdgeInsets.only(top: 20),),
-                const SizedBox(
-                  width: 325,
-                  height: 50,
                   child: TextField(
-                    cursorColor: Color(0xffC19354),
-
-                    // controller: _weightController,
-                    decoration: InputDecoration(
-                        hoverColor: Color(0xffC19354),
-                        focusColor: Color(0xffC19354),
-                        // hintText: "weight (kilograms)",
-                        labelText: "Additional description",
-                        // labelStyle:
-                        border: OutlineInputBorder()),
-                    keyboardType: TextInputType.multiline,
+                    controller: titleController,
                     maxLines: null,
-                    obscureText: false,
-                    // maxLines: 3,
-                    // maxLines: 3,
-                    // suffixIcon:
+                    decoration: InputDecoration(
+                      errorText: _validateTitle ? 'Value Can\'t Be Empty' : null,
+                      isDense: true,
+                      contentPadding: const EdgeInsets.all(20.0),
+                      border: InputBorder.none,
+                    ),
                   ),
                 ),
-                Padding(padding: EdgeInsets.only(top: 15),),
-                ElevatedButton(onPressed:(){
-                }, child:Text("submit", style: TextStyle(color: Colors.white),)),
-                Padding(padding: EdgeInsets.only(top: 8),),
-
+                const SizedBox(height: 3,),
+                const Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text('A title must be at most 30 characters', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),),
+                ),
+                const SizedBox(height: 20,),
+                const Text('Description', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                const SizedBox(height: 10,),
+                Container(
+                  decoration:  const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    color: BasicColors.bgColor
+                  ),
+                  child: TextField(
+                    controller: descriptionController,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      errorText: _validateDescription ? 'Value Can\'t Be Empty' : null,
+                      isDense: true,
+                      contentPadding: const EdgeInsets.all(20.0),
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 3,),
+                const Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text('Describe important information like color, feature etc.', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),),
+                ),
+                const SizedBox(height: 20,),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Date', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                        const SizedBox(height: 10,),
+                        Container(
+                          width: 110,
+                          decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
+                              color: BasicColors.bgColor
+                          ),
+                          child: TextField(
+                            controller: date,
+                            maxLines: null,
+                            decoration: InputDecoration(
+                              errorText: _validateDate ? 'Should be 8\n digits' : null,
+                              isDense: true,
+                              contentPadding: const EdgeInsets.all(10.0),
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 3,),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Text('DD.MM.YYYY', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(width: 20,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Place', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                          const SizedBox(height: 10,),
+                          Container(
+                            decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(12)),
+                                color: BasicColors.bgColor
+                            ),
+                            child: TextField(
+                              controller: placeController,
+                              maxLines: null,
+                              decoration: InputDecoration(
+                                errorText: _validatePlace ? 'Fill this' : null,
+                                isDense: true,
+                                contentPadding: const EdgeInsets.all(10.0),
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 3,),
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text('Where you lose/found', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 20,),
+                GestureDetector(
+                  onTap: (){
+                    if(checkFilled()){
+                      createPostFirebase();
+                      Navigator.of(context).pop();
+                    }
+                    descriptionController.text.isEmpty ? _validateDescription = true : _validateDescription = false;
+                    titleController.text.isEmpty ? _validateTitle = true : _validateTitle = false;
+                    date.text.length != 10 ? _validateDate = true : _validateDate = false;
+                    placeController.text.isEmpty ? _validatePlace = true : _validatePlace = false;
+                    setState(() {});
+                  },
+                  child: Container(
+                    height: 50,
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(999)),
+                      color: tealGreen
+                    ),
+                    child: const Center(child: Text('Create Post', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),)),
+                  ),
+                ),
+                const SizedBox(height: 20,),
               ],
             ),
-          )
-      )
+          ),
+        ),
+      ),
     );
   }
 }

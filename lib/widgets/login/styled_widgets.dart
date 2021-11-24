@@ -39,6 +39,7 @@ class TextFieldWidget extends StatelessWidget {
       padding: EdgeInsets.all(10),
       child: Material(
         color: Colors.grey.withOpacity(0),
+        // color: Colors.transparent,
         child: child,
       ),
     );
@@ -153,4 +154,57 @@ class OpenPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+
+class TextWidgetWhite extends StatelessWidget {
+  final text;
+  TextWidgetWhite(this.text);
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        color: Colors.white.withOpacity(0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.only(top: 80, bottom: 70),
+              width: 303,
+              child: Text(
+                text,
+                style: GoogleFonts.roboto(
+                    fontSize: 48,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            )
+          ],
+        ));
+  }
+}
+
+class TextWidgetWhiteSignUp extends StatelessWidget {
+  final text;
+  TextWidgetWhiteSignUp(this.text);
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        color: Colors.white.withOpacity(0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.only(top: 30, bottom: 30),
+              width: 303,
+              child: Text(
+                text,
+                style: GoogleFonts.roboto(
+                    fontSize: 48,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            )
+          ],
+        ));
+  }
 }
