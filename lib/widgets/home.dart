@@ -52,22 +52,26 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: (_selectedIndex==1)?null:AppBar(
-        title: Text(actionBarTitle,
-            style: const TextStyle(fontWeight: FontWeight.bold)),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        automaticallyImplyLeading: false,
-      ),
+      appBar: (_selectedIndex == 1)
+          ? null
+          : AppBar(
+              title: Text(actionBarTitle,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              centerTitle: true,
+              elevation: 0,
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              automaticallyImplyLeading: false,
+            ),
       body: PageTransitionSwitcher(
-        transitionBuilder:
-            (Widget child, primaryAnimation, secondaryAnimation)=>
-                FadeThroughTransition (animation: primaryAnimation, secondaryAnimation: secondaryAnimation,
-            child: child,),
-        child: _widgetOptions[_selectedIndex]
-      ),
+          transitionBuilder:
+              (Widget child, primaryAnimation, secondaryAnimation) =>
+                  FadeThroughTransition(
+                    animation: primaryAnimation,
+                    secondaryAnimation: secondaryAnimation,
+                    child: child,
+                  ),
+          child: _widgetOptions[_selectedIndex]),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -89,23 +93,25 @@ class _HomeWidgetState extends State<HomeWidget> {
         unselectedLabelStyle: textStyle,
         onTap: _onItemTapped,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              //MaterialPageRoute(builder: (context) => AnimatedAddItem()),
-              PageRouteBuilder(
-                  pageBuilder: (context, animation, _) {
-                    return AnimatedAddItem();
-                  },
-                  opaque: false));
-        },
-        tooltip: 'Increment',
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
+      floatingActionButton: (_selectedIndex == 0)
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    //MaterialPageRoute(builder: (context) => AnimatedAddItem()),
+                    PageRouteBuilder(
+                        pageBuilder: (context, animation, _) {
+                          return AnimatedAddItem();
+                        },
+                        opaque: false));
+              },
+              tooltip: 'Increment',
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+            )
+          : null,
     );
   }
 }

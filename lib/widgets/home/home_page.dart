@@ -86,27 +86,34 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           return GestureDetector(
                               onTap: () {
                                 Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    transitionDuration: Duration(seconds: 2),
-                                    transitionsBuilder: (BuildContext context,
-                                        Animation<double> animation,
-                                        Animation<double> secanimation,
-                                        Widget child) {
-                                      animation = CurvedAnimation(parent: animation,
-                                      curve: Curves.elasticInOut);
+                                    context,
+                                    PageRouteBuilder(
+                                        transitionDuration:
+                                            Duration(seconds: 2),
+                                        transitionsBuilder:
+                                            (BuildContext context,
+                                                Animation<double> animation,
+                                                Animation<double> secanimation,
+                                                Widget child) {
+                                          animation = CurvedAnimation(
+                                              parent: animation,
+                                              curve: Curves.elasticInOut);
 
-                                      return ScaleTransition(
-                                        alignment: Alignment.center,
-                                        scale: animation,
-                                        child: child,
-                                      );
-                                    }, pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-                                      // Navigator.of(context).pushNamed('/item_information');
-                                      return LoFoItemInfo(data: snapshot.data![index],);
-                                  }
-                                  )
-                                );
+                                          return ScaleTransition(
+                                            alignment: Alignment.center,
+                                            scale: animation,
+                                            child: child,
+                                          );
+                                        },
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation,
+                                            Animation<double>
+                                                secondaryAnimation) {
+                                          // Navigator.of(context).pushNamed('/item_information');
+                                          return LoFoItemInfo(
+                                            data: snapshot.data![index],
+                                          );
+                                        }));
                                 // Navigator.of(context).pushNamed('/item_information');
                               },
                               child: HomePageItemWidget(
@@ -115,7 +122,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         });
                   }
                 }),
-          )
+          ),
         ]));
   }
 }
