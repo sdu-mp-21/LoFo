@@ -25,12 +25,13 @@ class _HomeWidgetState extends State<HomeWidget> {
   ];
 
   void _onItemTapped(int index) {
-    if(index == 1){  // add page
+    if (index == 1) {
+      // add page
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => SavedPostsPage()),
       );
-    }else{
+    } else {
       setState(() {
         _selectedIndex = index;
         updateActionBarTitle(index);
@@ -87,6 +88,23 @@ class _HomeWidgetState extends State<HomeWidget> {
         unselectedItemColor: Colors.grey,
         unselectedLabelStyle: textStyle,
         onTap: _onItemTapped,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              //MaterialPageRoute(builder: (context) => AnimatedAddItem()),
+              PageRouteBuilder(
+                  pageBuilder: (context, animation, _) {
+                    return AnimatedAddItem();
+                  },
+                  opaque: false));
+        },
+        tooltip: 'Increment',
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }
