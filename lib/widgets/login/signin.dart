@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lofo_app/widgets/login/signup.dart';
 import 'styled_widgets.dart';
 
 class SigninWidget extends StatefulWidget {
@@ -105,7 +106,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        TextButtonWidget("Sign Up", '/signup'),
+                        TextButtonWidgetToSignUp("Sign Up"),
                         TextButtonWidget("Forgot Passwords", null)
                       ],
                     ),

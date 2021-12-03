@@ -4,6 +4,8 @@ import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'login/signin.dart';
+
 class IntroSliderPage extends StatefulWidget {
   const IntroSliderPage({Key? key}) : super(key: key);
 
@@ -128,7 +130,8 @@ class _IntroSliderPageState extends State<IntroSliderPage> {
             shape: const StadiumBorder(),
           ),
           onPressed: () {
-            Navigator.of(context).pushNamed('/login');
+            Navigator.of(context).push(_createRoute());
+            // Navigator.of(context).pushNamed('/login');
           },
           child: Text(
             "Start",
@@ -147,4 +150,21 @@ class _IntroSliderPageState extends State<IntroSliderPage> {
       ),
     );
   }
+}
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const SigninWidget(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }
