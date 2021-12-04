@@ -14,7 +14,10 @@ class HomePageWidget extends StatefulWidget {
 }
 
 class _HomePageWidgetState extends State<HomePageWidget> {
+  final GlobalKey _menuKey = GlobalKey();
   final ScrollController _controller = ScrollController();
+  final TextEditingController _search = TextEditingController();
+  String _selection = 'title';
   final List<ItemInfoData> dataSet = [
     ItemInfoData(
         'Airpods 2', 'Found', 'Today', 'assets/image/airpods_on_hand.png'),
@@ -25,21 +28,134 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     ItemInfoData(
         'Acer Nitro 5', 'Found', 'Today', 'assets/image/acerNitro.jpg'),
   ];
-
   List<String> categories = ['All', 'Mobiles', 'Documents', 'Laptops', 'Other'];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+  void _showPopupMenu(Offset globalPosition) async {
+    await showMenu(
+      context: context,
+      position: const RelativeRect.fromLTRB(100, 50, 0, 0),
+      items: [
+        PopupMenuItem<String>(
+          onTap: (){
+            _selection = 'title';
+          },
+          child: const Text('By title')),
+        PopupMenuItem<String>(
+            onTap: (){
+              _selection = 'author';
+            },
+            child: const Text('By author')),
+        PopupMenuItem<String>(
+            onTap: (){
+              _selection = 'place';
+            },
+            child: const Text('By place')),
+      ],
+      elevation: 8.0,
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
-        //color: Colors.blueAccent.withOpacity(0.1),
         color: Colors.white,
         child: Column(children: [
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 15),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    color: Colors.grey.withOpacity(0.2)
+                  ),
+                  child: TextField(
+                    controller: _search,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Search',
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    ),
+                    onChanged: (String str){
+                      setState(() {});
+                    },
+                  )
+                ),
+              ),
+              GestureDetector(
+                onTapDown: (TapDownDetails details) {
+                  _showPopupMenu(details.globalPosition);
+                },
+                child: const Icon(Icons.search)
+              ),
+              const SizedBox(width: 10,)
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           TopListviewWidget(
             controller: _controller,
           ),
           const SizedBox(
             height: 10,
           ),
-          Expanded(
+          (_search.text.isNotEmpty)
+          ?Expanded(
+            child: FutureBuilder<List<Record>>(
+                future: ApiClient().getPost(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('${snapshot.error}');
+                  }
+                  if (!snapshot.hasData) {
+                    return const Center(child: Text('LOADING'));
+                  } else {
+                    allRecordPosts = snapshot.data!.toList();
+                    var foundRecords = [];
+                    // allRecordPosts.where((element) => element.customerName.toLowerCase().contains(_search.text.toLowerCase())).toList();
+                    for(var post in allRecordPosts){
+                      if(_selection=='title'){
+                        if(post.title.toLowerCase().contains(_search.text.toLowerCase())){
+                          foundRecords.add(post);
+                        }
+                      }else if(_selection=='author'){
+                        if(post.customerName.toLowerCase().contains(_search.text.toLowerCase())){
+                          foundRecords.add(post);
+                        }
+                      }else if(_selection=='place'){
+                        if(post.place.toLowerCase().contains(_search.text.toLowerCase())){
+                          foundRecords.add(post);
+                        }
+                      }
+                    }
+                    return ListView.builder(
+                        controller: _controller,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: foundRecords.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoFoItemInfo(
+                                        data: foundRecords[index]),
+                                  ),
+                                );
+                                // Navigator.of(context).pushNamed('/item_information');
+                              },
+                              child: HomePageItemWidget(
+                                data: foundRecords[index],
+                              ));
+                        });
+                  }
+                }),
+          )
+          :Expanded(
             child: FutureBuilder<List<Record>>(
                 future: ApiClient().getPost(),
                 builder: (context, snapshot) {
