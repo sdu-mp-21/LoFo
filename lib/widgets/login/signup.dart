@@ -118,7 +118,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        TextButtonWidget("Sign In", '/login'),
+                        TextButtonWidgetToSignIn("Sign In"),
                       ],
                     ),
                   ),

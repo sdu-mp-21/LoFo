@@ -175,6 +175,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             return Column(
                               children: [
                                 // 'Category ${index/3+1}'
+
                                 Text(
                                   categories[(index / 3).toInt()],
                                   style: const TextStyle(
@@ -201,12 +202,34 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           return GestureDetector(
                               onTap: () {
                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoFoItemInfo(
-                                        data: snapshot.data![index]),
-                                  ),
-                                );
+                                    context,
+                                    PageRouteBuilder(
+                                        transitionDuration:
+                                            Duration(seconds: 2),
+                                        transitionsBuilder:
+                                            (BuildContext context,
+                                                Animation<double> animation,
+                                                Animation<double> secanimation,
+                                                Widget child) {
+                                          animation = CurvedAnimation(
+                                              parent: animation,
+                                              curve: Curves.elasticInOut);
+
+                                          return ScaleTransition(
+                                            alignment: Alignment.center,
+                                            scale: animation,
+                                            child: child,
+                                          );
+                                        },
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation,
+                                            Animation<double>
+                                                secondaryAnimation) {
+                                          // Navigator.of(context).pushNamed('/item_information');
+                                          return LoFoItemInfo(
+                                            data: snapshot.data![index],
+                                          );
+                                        }));
                                 // Navigator.of(context).pushNamed('/item_information');
                               },
                               child: HomePageItemWidget(
@@ -215,7 +238,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         });
                   }
                 }),
-          )
+          ),
         ]));
   }
 }
