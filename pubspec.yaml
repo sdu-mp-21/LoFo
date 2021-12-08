@@ -43,6 +43,7 @@ dependencies:
   url_launcher: ^6.0.15
   flutter_masked_text2: ^0.9.1
   animations: ^2.0.2
+  fluttertoast: ^8.0.8
 
 dev_dependencies:
   http:

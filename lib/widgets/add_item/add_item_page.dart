@@ -2,6 +2,7 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -67,10 +68,17 @@ class _AddItemPageWidgetState extends State<AddItemPageWidget> {
   final descriptionController = TextEditingController();
   final placeController = TextEditingController();
   final date = MaskedTextController(mask: '00.00.0000');
+  late FToast fToast;
 
   String dropdownValue = 'Mobile';
   String type = 'Lost';
   File? imageFile;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    fToast = FToast();
+  }
 
   var _validateDescription = false;
   var _validateTitle = false;
@@ -78,6 +86,7 @@ class _AddItemPageWidgetState extends State<AddItemPageWidget> {
   var _validatePlace = false;
 
   String message = '';
+
 
   Future uploadImageToFirebase() async {
     print(imageFile);
@@ -110,6 +119,71 @@ class _AddItemPageWidgetState extends State<AddItemPageWidget> {
     uploadImageToFirebase();
   }
 
+  void _showCartAdded() {
+    fToast.showToast(
+      child: Dismissible(
+        key: UniqueKey(),
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Material(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            color: Colors.transparent,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              child: Container(
+                width: 400,
+                // height: 77,
+                constraints: const BoxConstraints(
+                    minHeight: 77
+                ),
+                decoration:  const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    color: Colors.white
+                  // color: Color.fromRGBO(241, 243, 245, 0.8),
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 14,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 7,),
+                          Row(
+                            children: [
+                              // Image(image: AssetImage('images/sandyqLogoCart1.png'), height: 18,),
+                              SizedBox(width: 5,),
+                              Text('Sandyq', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14,color: Color.fromRGBO(161, 51, 10, 0.8)),)
+                            ],
+                          ),
+                          SizedBox(height: 7,),
+                          Text('Добавлено }', style: TextStyle(fontFamily: 'Google-Sans',fontWeight: FontWeight.w700, fontSize: 16)),
+                          SizedBox(height: 14,),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 2,),
+                    // Image(image: AssetImage('images/addedCart.png'), height: 45, fit: BoxFit.fitHeight,),
+                    SizedBox(width: 14,),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        )
+        ,
+        direction: DismissDirection.up,
+        onDismissed: (direction) {
+          if(direction == DismissDirection.endToStart) {
+            fToast.removeCustomToast();
+          }
+        },
+      ),
+      gravity: ToastGravity.TOP,
+      toastDuration: Duration(seconds: 2),
+    );
+  }
+
   bool checkFilled() {
     if (titleController.text.isNotEmpty &&
         descriptionController.text.isNotEmpty &&
@@ -137,6 +211,8 @@ class _AddItemPageWidgetState extends State<AddItemPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    fToast.init(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -462,6 +538,7 @@ class _AddItemPageWidgetState extends State<AddItemPageWidget> {
                 GestureDetector(
                   onTap: () {
                     if (checkFilled()) {
+                      _showCartAdded();
                       createPostFirebase();
                       Navigator.of(context).pop();
                     }
