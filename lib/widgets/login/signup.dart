@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lofo_app/widgets/login/signin.dart';
 import 'styled_widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);
@@ -14,9 +15,15 @@ class _SignupWidgetState extends State<SignupWidget> {
   bool hidePassword = true;
   InputDecoration getDec(text, icon, icon_1) {
     InputDecoration decoration = InputDecoration(
-      prefixIcon: Icon(icon),
+      prefixIcon: Container(
+        child: FaIcon(
+          icon,
+          size: 20,
+        ),
+        margin: EdgeInsets.fromLTRB(15, 13, 0, 0),
+      ),
       suffixIcon: icon_1,
-      contentPadding: const EdgeInsets.all(25),
+      contentPadding: const EdgeInsets.all(15),
       isDense: true,
       filled: true,
       fillColor: Colors.grey.withOpacity(0.4),
@@ -38,6 +45,11 @@ class _SignupWidgetState extends State<SignupWidget> {
   final name = TextEditingController();
   final email = TextEditingController();
   final password = TextEditingController();
+  final image = TextEditingController();
+  final role = TextEditingController();
+  final phone_number = TextEditingController();
+  final whats_up_number = TextEditingController();
+  final instagram_name = TextEditingController();
   List<String> list = [];
 
   List<String> getList(nameC, emailC, passwordC) {
@@ -50,85 +62,114 @@ class _SignupWidgetState extends State<SignupWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomPaint(
-        painter: BackgroundSignUp(),
-        child: Stack(
-          children: [
-            // CircleContainer(700, 700, Colors.lightBlue, 360, 100, -80),
-            // CircleContainer(400, 400, Colors.grey.withOpacity(0.8), 220, 360, 820),
-            ListView(children: [
-              Column(
-                children: <Widget>[
-                  Column(
-                    children: [
-                      TextWidgetWhiteSignUp("Create Account"),
-                      Column(
-                        children: [
-                          TextFieldWidget(
-                            TextField(
-                              controller: name,
-                              decoration: getDec("Name", Icons.person, null),
-                            ),
-                          ),
-                          TextFieldWidget(
-                            TextField(
-                              controller: email,
-                              decoration: getDec("Your Email", Icons.email, null),
-                            ),
-                          ),
-                          TextFieldWidget(
-                            TextField(
-                              controller: email,
-                              decoration:
-                              getDec("Phone Number", Icons.phone, null),
-                            ),
-                          ),
-                          TextFieldWidget(
-                            TextField(
-                              controller: password,
-                              obscureText: hidePassword,
-                              decoration: getDec(
-                                  "Password",
-                                  Icons.lock,
-                                  IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          hidePassword = !hidePassword;
-                                        });
-                                      },
-                                      color: Colors.black.withOpacity(0.4),
-                                      icon: Icon(hidePassword
-                                          ? Icons.visibility_off
-                                          : Icons.visibility))),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          ButtonWidget(
-                              "Sign Up", '/main', getList(name, email, password)),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(top: 10, right: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+        body: CustomPaint(
+      painter: BackgroundSignUp(),
+      child: Stack(
+        children: [
+          // CircleContainer(700, 700, Colors.lightBlue, 360, 100, -80),
+          // CircleContainer(400, 400, Colors.grey.withOpacity(0.8), 220, 360, 820),
+          ListView(children: [
+            Column(
+              children: <Widget>[
+                Column(
+                  children: [
+                    TextWidgetWhiteSignUp("Create Account"),
+                    Column(
                       children: [
-                        TextButtonWidgetToSignIn("Sign In"),
+                        TextFieldWidget(
+                          TextField(
+                            controller: name,
+                            decoration:
+                                getDec("Name", FontAwesomeIcons.userAlt, null),
+                          ),
+                        ),
+                        TextFieldWidget(
+                          TextField(
+                            controller: email,
+                            decoration: getDec(
+                                "Your Email", FontAwesomeIcons.envelope, null),
+                          ),
+                        ),
+                        TextFieldWidget(
+                          TextField(
+                            controller: image,
+                            decoration:
+                                getDec("Image", FontAwesomeIcons.image, null),
+                          ),
+                        ),
+                        TextFieldWidget(
+                          TextField(
+                            controller: role,
+                            decoration: getDec(
+                                "Role", FontAwesomeIcons.graduationCap, null),
+                          ),
+                        ),
+                        TextFieldWidget(
+                          TextField(
+                            controller: phone_number,
+                            decoration: getDec("Phone Number",
+                                FontAwesomeIcons.phoneAlt, null),
+                          ),
+                        ),
+                        TextFieldWidget(
+                          TextField(
+                            controller: whats_up_number,
+                            decoration: getDec("WhatsApp number",
+                                FontAwesomeIcons.whatsapp, null),
+                          ),
+                        ),
+                        TextFieldWidget(
+                          TextField(
+                            controller: instagram_name,
+                            decoration: getDec("Istagram Name",
+                                FontAwesomeIcons.instagram, null),
+                          ),
+                        ),
+                        TextFieldWidget(
+                          TextField(
+                            controller: password,
+                            obscureText: hidePassword,
+                            decoration: getDec(
+                                "Password",
+                                FontAwesomeIcons.lock,
+                                IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        hidePassword = !hidePassword;
+                                      });
+                                    },
+                                    color: Colors.black.withOpacity(0.4),
+                                    icon: Icon(hidePassword
+                                        ? Icons.visibility_off
+                                        : Icons.visibility))),
+                          ),
+                        ),
                       ],
                     ),
+                    Column(
+                      children: [
+                        ButtonWidget(
+                            "Sign Up", '/main', getList(name, email, password)),
+                      ],
+                    ),
+                  ],
+                ),
+                Container(
+                  padding: const EdgeInsets.only(top: 10, right: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      TextButtonWidgetToSignIn("Sign In"),
+                    ],
                   ),
-                ],
-              ),
-            ])
-          ],
-        ),
-      )
-    );
+                ),
+              ],
+            ),
+          ])
+        ],
+      ),
+    ));
   }
 }
 
@@ -139,7 +180,6 @@ class BackgroundSignUp extends CustomPainter {
     var sh = size.height;
     var paint = Paint();
     final Color color = HexColor.fromHex('#B6B3B3');
-
 
     Path mainBackground = Path();
     mainBackground.addRect(Rect.fromLTRB(0, 0, sw, sh));

@@ -38,7 +38,7 @@ class TextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 300,
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(5),
       child: Material(
         color: Colors.grey.withOpacity(0),
         // color: Colors.transparent,
@@ -132,7 +132,7 @@ class TextButtonWidgetToSignUp extends StatelessWidget {
           child: Text(
             text,
             style:
-            GoogleFonts.roboto(fontSize: 16, fontWeight: FontWeight.bold),
+                GoogleFonts.roboto(fontSize: 16, fontWeight: FontWeight.bold),
           )),
     );
   }
@@ -151,13 +151,15 @@ class CircleContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Container(
-      width: width,
-      height: height,
-      child: CustomPaint(
-        painter: OpenPainter(color, radius, x, y),
+    return Scaffold(
+      body: Container(
+        width: width,
+        height: height,
+        child: CustomPaint(
+          painter: OpenPainter(color, radius, x, y),
+        ),
       ),
-    ),);
+    );
   }
 }
 
@@ -181,7 +183,6 @@ class OpenPainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => true;
 }
-
 
 class TextWidgetWhite extends StatelessWidget {
   final text;
@@ -234,6 +235,7 @@ class TextWidgetWhiteSignUp extends StatelessWidget {
         ));
   }
 }
+
 class TextWidgetWhiteSignIn extends StatelessWidget {
   final text;
   TextWidgetWhiteSignIn(this.text);
@@ -278,14 +280,16 @@ class TextButtonWidgetToSignIn extends StatelessWidget {
           child: Text(
             text,
             style:
-            GoogleFonts.roboto(fontSize: 16, fontWeight: FontWeight.bold),
+                GoogleFonts.roboto(fontSize: 16, fontWeight: FontWeight.bold),
           )),
     );
   }
 }
+
 Route _createRouteToSignIn() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const SigninWidget(),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const SigninWidget(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;
@@ -303,7 +307,8 @@ Route _createRouteToSignIn() {
 
 Route _createRouteToSignUp() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const SignupWidget(),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const SignupWidget(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;

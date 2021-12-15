@@ -42,7 +42,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     if (index == 0) {
       actionBarTitle = 'Lost and Found Items';
     } else if (index == 1) {
-      actionBarTitle = 'Create Post';
+      actionBarTitle = 'Saved Posts';
     } else {
       actionBarTitle = 'Profile';
     }
@@ -80,7 +80,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
+            icon: Icon(Icons.bookmark),
             label: 'Favourites',
           ),
           BottomNavigationBarItem(
