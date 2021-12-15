@@ -143,28 +143,28 @@ class _AddItemPageWidgetState extends State<AddItemPageWidget> {
                 ),
                 child: Row(
                   children: [
-                    SizedBox(width: 14,),
+                    const SizedBox(width: 14,),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 7,),
+                          const SizedBox(height: 7,),
                           Row(
-                            children: [
+                            children: const [
                               // Image(image: AssetImage('images/sandyqLogoCart1.png'), height: 18,),
                               SizedBox(width: 5,),
-                              Text('Sandyq', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14,color: Color.fromRGBO(161, 51, 10, 0.8)),)
+                              Text('Lost & Found', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14,color: Color.fromRGBO(161, 51, 10, 0.8)),)
                             ],
                           ),
-                          SizedBox(height: 7,),
-                          Text('Добавлено }', style: TextStyle(fontFamily: 'Google-Sans',fontWeight: FontWeight.w700, fontSize: 16)),
-                          SizedBox(height: 14,),
+                          const SizedBox(height: 7,),
+                          const Text('You have added new post succesfully', style: TextStyle(fontFamily: 'Google-Sans',fontWeight: FontWeight.w700, fontSize: 16)),
+                          const SizedBox(height: 14,),
                         ],
                       ),
                     ),
-                    SizedBox(width: 2,),
-                    // Image(image: AssetImage('images/addedCart.png'), height: 45, fit: BoxFit.fitHeight,),
-                    SizedBox(width: 14,),
+                    const SizedBox(width: 2,),
+                    const Icon(Icons.done),
+                    const SizedBox(width: 14,),
                   ],
                 ),
               ),
@@ -180,7 +180,7 @@ class _AddItemPageWidgetState extends State<AddItemPageWidget> {
         },
       ),
       gravity: ToastGravity.TOP,
-      toastDuration: Duration(seconds: 2),
+      toastDuration: const Duration(seconds: 5),
     );
   }
 

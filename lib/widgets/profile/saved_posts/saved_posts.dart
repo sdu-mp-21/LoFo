@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lofo_app/api_client/api_client.dart';
 import 'package:lofo_app/model/record.dart';
 import 'package:lofo_app/model/saved_posts.dart';
@@ -13,13 +14,80 @@ class SavedPostsPage extends StatefulWidget {
 }
 
 class _SavedPostsPageState extends State<SavedPostsPage> {
+  late FToast fToast;
 
   @override
   void initState(){
     super.initState();
   }
+  void _showCartAdded() {
+    fToast.showToast(
+      child: Dismissible(
+        key: UniqueKey(),
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Material(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            color: Colors.transparent,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              child: Container(
+                width: 400,
+                // height: 77,
+                constraints: const BoxConstraints(
+                    minHeight: 77
+                ),
+                decoration:  const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    color: Colors.white
+                  // color: Color.fromRGBO(241, 243, 245, 0.8),
+                ),
+                child: Row(
+                  children: [
+                    const SizedBox(width: 14,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 7,),
+                          Row(
+                            children: const [
+                              // Image(image: AssetImage('images/sandyqLogoCart1.png'), height: 18,),
+                              SizedBox(width: 5,),
+                              Text('Lost & Found', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14,color: Color.fromRGBO(161, 51, 10, 0.8)),)
+                            ],
+                          ),
+                          const SizedBox(height: 7,),
+                          const Text('You have succesfully deleted saved post', style: TextStyle(fontFamily: 'Google-Sans',fontWeight: FontWeight.w700, fontSize: 16)),
+                          const SizedBox(height: 14,),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 2,),
+                    const Icon(Icons.delete_outline, color: Colors.red,),
+                    const SizedBox(width: 14,),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        )
+        ,
+        direction: DismissDirection.up,
+        onDismissed: (direction) {
+          if(direction == DismissDirection.endToStart) {
+            fToast.removeCustomToast();
+          }
+        },
+      ),
+      gravity: ToastGravity.TOP,
+      toastDuration: const Duration(seconds: 5),
+    );
+  }
   @override
   Widget build(BuildContext context) {
+    fToast = FToast();
+    fToast.init(context);
     List<Record> saved_posts = [];
     for(var i in saved_posts_by_id){
       saved_posts.add(allRecords[i]);
@@ -55,6 +123,7 @@ class _SavedPostsPageState extends State<SavedPostsPage> {
                     setState(() {
                       saved_posts_by_id.removeAt(index);
                     });
+                    _showCartAdded();
                   },
                   background: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
