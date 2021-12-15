@@ -57,7 +57,6 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                 ],
               ),
             ),
-
             Container(
               color: Colors.white,
               margin: const EdgeInsets.only(bottom: 30),
@@ -88,7 +87,6 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                 ],
               ),
             ),
-
             Container(
               width: MediaQuery.of(context).size.width,
               color: Colors.white,
@@ -214,7 +212,6 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                 ],
               ),
             ),
-
             GestureDetector(
               onTap: () {
                 Navigator.of(context).pop();

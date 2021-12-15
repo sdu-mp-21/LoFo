@@ -25,18 +25,17 @@ class _HomeWidgetState extends State<HomeWidget> {
   ];
 
   void _onItemTapped(int index) {
-    if (index == 1) {
-      // add page
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => SavedPostsPage()),
-      );
-    } else {
-      setState(() {
-        _selectedIndex = index;
-        updateActionBarTitle(index);
-      });
-    }
+    // if (index == 1) {
+    //   // add page
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => SavedPostsPage()),
+    //   );
+    // } else {
+    setState(() {
+      _selectedIndex = index;
+      updateActionBarTitle(index);
+    });
   }
 
   void updateActionBarTitle(int index) {
@@ -52,17 +51,19 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: (_selectedIndex == 1)
-          ? null
-          : AppBar(
-              title: Text(actionBarTitle,
-                  style: const TextStyle(fontWeight: FontWeight.bold)),
-              centerTitle: true,
-              elevation: 0,
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.black,
-              automaticallyImplyLeading: false,
-            ),
+      appBar:
+          // (_selectedIndex == 1)
+          //     ? null
+          //     :
+          AppBar(
+        title: Text(actionBarTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold)),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        automaticallyImplyLeading: false,
+      ),
       body: PageTransitionSwitcher(
           transitionBuilder:
               (Widget child, primaryAnimation, secondaryAnimation) =>
