@@ -3,6 +3,7 @@ import 'package:lofo_app/model/record.dart';
 import 'package:lofo_app/widgets/home/home_page_item.dart';
 import 'package:lofo_app/widgets/item_info/item_info_helper.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:lofo_app/widgets/item_info/author_info.dart';
 
 class LoFoItemInfo extends StatefulWidget {
@@ -15,6 +16,9 @@ class LoFoItemInfo extends StatefulWidget {
 class _LoFoItemInfoState extends State<LoFoItemInfo> {
   @override
   Widget build(BuildContext context) {
+    launchURL(String url) async {
+      if (!await launch(url)) throw 'Could not launch $url';
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Description'),
@@ -23,6 +27,64 @@ class _LoFoItemInfoState extends State<LoFoItemInfo> {
         //backgroundColor: Colors.blueAccent.withOpacity(0.1),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
+        actions: [
+          GestureDetector(
+            onTap: (){
+              showModalBottomSheet<void>(
+                context: context,
+                builder: (BuildContext context) {
+                  return Container(
+                    height: 200,
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/image/87390.png', height: 40,width:40,),
+                              const Text('Stories', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),)
+                            ],
+                          ),
+                          GestureDetector(
+                            onTap: (){
+                              launchURL(
+                                  'https://api.whatsapp.com/send/?phone=77089373529&text&app_absent=0');
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset('assets/image/WhatsApp_logo-color-vertical.svg.png', height: 40,width:40,),
+                                const Text('Whatsapp', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),)
+                              ],
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: (){
+                              launchURL(
+                                  'https://api.whatsapp.com/send/?phone=77089373529&text&app_absent=0');
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset('assets/image/Telegram_2019_Logo.svg.png', height: 40,width:40,),
+                                const Text('Whatsapp', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),)
+                              ],
+                            ),
+                          )
+                        ],
+                      )
+                    ),
+                  );
+                },
+              );
+            },
+            child: const Padding(
+              padding: EdgeInsets.only(right: 10),
+              child: Icon(Icons.share),
+            ),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -128,14 +190,14 @@ class _LoFoItemInfoState extends State<LoFoItemInfo> {
                                         Radius.circular(40)),
                                     image: DecorationImage(
                                       image:
-                                          NetworkImage(widget.data.customerImg),
+                                      NetworkImage(widget.data.customerImg),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
                                 Column(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(widget.data.customerName,
@@ -148,7 +210,7 @@ class _LoFoItemInfoState extends State<LoFoItemInfo> {
                                             fontSize: 15,
                                             fontWeight: FontWeight.normal,
                                             color:
-                                                Colors.grey.withOpacity(0.8)))
+                                            Colors.grey.withOpacity(0.8)))
                                   ],
                                 )
                               ],
@@ -163,7 +225,7 @@ class _LoFoItemInfoState extends State<LoFoItemInfo> {
                               margin: EdgeInsets.only(bottom: 10),
                               decoration: BoxDecoration(
                                 borderRadius:
-                                    const BorderRadius.all(Radius.circular(17)),
+                                const BorderRadius.all(Radius.circular(17)),
                                 color: Colors.lightBlue,
                               ),
                               child: Text(
