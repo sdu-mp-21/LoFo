@@ -52,18 +52,15 @@ class _HomeWidgetState extends State<HomeWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-          // (_selectedIndex == 1)
-          //     ? null
-          //     :
-          AppBar(
-        title: Text(actionBarTitle,
-            style: const TextStyle(fontWeight: FontWeight.bold)),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        automaticallyImplyLeading: false,
-      ),
+      (actionBarTitle!='Saved Posts')?AppBar(
+          title: Text(actionBarTitle,
+              style: const TextStyle(fontWeight: FontWeight.bold)),
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          automaticallyImplyLeading: false,
+        ):null,
       body: PageTransitionSwitcher(
           transitionBuilder:
               (Widget child, primaryAnimation, secondaryAnimation) =>

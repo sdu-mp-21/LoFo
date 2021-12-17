@@ -33,47 +33,70 @@ class _LoFoItemInfoState extends State<LoFoItemInfo> {
               showModalBottomSheet<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  return Container(
-                    height: 200,
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  return Material(
+                    color: Colors.transparent,
+                    child: Container(
+                      height: 150,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        color: Colors.white,
+                      ),
+                      child: Column(
                         children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset('assets/image/87390.png', height: 40,width:40,),
-                              const Text('Stories', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),)
-                            ],
-                          ),
-                          GestureDetector(
-                            onTap: (){
-                              launchURL(
-                                  'https://api.whatsapp.com/send/?phone=77089373529&text&app_absent=0');
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                          SizedBox(height: 25,),
+                          Text('Share this post on social media', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 17),),
+                          SizedBox(height: 25,),
+                          Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Image.asset('assets/image/WhatsApp_logo-color-vertical.svg.png', height: 40,width:40,),
-                                const Text('Whatsapp', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),)
+                                GestureDetector(
+                                  onTap: () {
+                                    launchURL(
+                                        'https://www.instagram.com/flutter.developers/');
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset('assets/image/87390.png', height: 40,width:40,),
+                                      SizedBox(height: 10,),
+                                      const Text('Stories', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),)
+                                    ],
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: (){
+                                    launchURL(
+                                        'https://api.whatsapp.com/send/?phone=77089373529&text&app_absent=0');
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset('assets/image/WhatsApp_logo-color-vertical.svg.png', height: 40,width:40,),
+                                      SizedBox(height: 10,),
+                                      const Text('Whatsapp', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),)
+                                    ],
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: (){
+                                    launchURL(
+                                        'https://api.whatsapp.com/send/?phone=77089373529&text&app_absent=0');
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset('assets/image/Telegram_2019_Logo.svg.png', height: 40,width:40,),
+                                      SizedBox(height: 10,),
+                                      const Text('Telegram', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),)
+                                    ],
+                                  ),
+                                )
                               ],
-                            ),
+                            )
                           ),
-                          GestureDetector(
-                            onTap: (){
-                              launchURL(
-                                  'https://api.whatsapp.com/send/?phone=77089373529&text&app_absent=0');
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset('assets/image/Telegram_2019_Logo.svg.png', height: 40,width:40,),
-                                const Text('Whatsapp', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),)
-                              ],
-                            ),
-                          )
                         ],
-                      )
+                      ),
                     ),
                   );
                 },

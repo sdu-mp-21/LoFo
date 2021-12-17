@@ -173,8 +173,8 @@ class _HomePageItemWidgetState extends State<HomePageItemWidget> {
               ),
             ),
             Positioned(
-                top: -4,
-                right: 20,
+                top: 10,
+                right: 10,
                 child: GestureDetector(
                     onTap: () {
                       if (saved_posts_by_id.contains(widget.data.id - 1)) {
