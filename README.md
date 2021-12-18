@@ -25,10 +25,6 @@ The goal of the Lost and Found application is to ensure all lost items are retur
 
 ---
 
-## Features
-.... will be updated later
-api 
-
 ## Database
 
 For this project, we use MySQL database.
@@ -42,7 +38,7 @@ to record data:
 
 ## Project Demo
 
-![Запись_2021_11_03_11_17_27_973](https://user-images.githubusercontent.com/72996538/140013375-ed096b64-a4cc-48d3-a12d-55e23d293246.gif)
+![demo](https://user-images.githubusercontent.com/72996538/146636814-049f9a7d-68cf-4ee9-a5fa-9c339d12e375.gif)
 
 ## License & copyright
 © Suleyman Demirel University
