@@ -51,16 +51,17 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-      (actionBarTitle!='Saved Posts')?AppBar(
-          title: Text(actionBarTitle,
-              style: const TextStyle(fontWeight: FontWeight.bold)),
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          automaticallyImplyLeading: false,
-        ):null,
+      appBar: (actionBarTitle != 'Saved Posts')
+          ? AppBar(
+              title: Text(actionBarTitle,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              centerTitle: true,
+              elevation: 0,
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              automaticallyImplyLeading: false,
+            )
+          : null,
       body: PageTransitionSwitcher(
           transitionBuilder:
               (Widget child, primaryAnimation, secondaryAnimation) =>
@@ -71,18 +72,28 @@ class _HomeWidgetState extends State<HomeWidget> {
                   ),
           child: _widgetOptions[_selectedIndex]),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(
+              Icons.home,
+              size: 32,
+            ),
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark),
-            label: 'Favourites',
+            icon: Icon(
+              Icons.bookmark,
+              size: 32,
+            ),
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+            icon: Icon(
+              Icons.person,
+              size: 32,
+            ),
+            label: '',
           ),
         ],
         currentIndex: _selectedIndex,

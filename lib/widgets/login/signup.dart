@@ -92,13 +92,6 @@ class _SignupWidgetState extends State<SignupWidget> {
                         ),
                         TextFieldWidget(
                           TextField(
-                            controller: image,
-                            decoration:
-                                getDec("Image", FontAwesomeIcons.image, null),
-                          ),
-                        ),
-                        TextFieldWidget(
-                          TextField(
                             controller: role,
                             decoration: getDec(
                                 "Role", FontAwesomeIcons.graduationCap, null),

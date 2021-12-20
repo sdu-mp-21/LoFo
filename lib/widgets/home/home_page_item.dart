@@ -67,30 +67,30 @@ class _HomePageItemWidgetState extends State<HomePageItemWidget> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    widget.data.title,
-                    style: GoogleFonts.roboto(
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_on,
-                        color: Colors.grey.withOpacity(0.8),
-                        size: 23,
-                      ),
-                      Text(widget.data.place,
-                          style: GoogleFonts.roboto(
-                              fontSize: 15,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.grey.withOpacity(0.8)))
-                    ],
-                  ),
+                  // Text(
+                  //   widget.data.title,
+                  //   style: GoogleFonts.roboto(
+                  //       fontSize: 19,
+                  //       fontWeight: FontWeight.bold,
+                  //       color: Colors.white),
+                  // ),
+                  // const SizedBox(
+                  //   height: 4,
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     Icon(
+                  //       Icons.location_on,
+                  //       color: Colors.grey.withOpacity(0.8),
+                  //       size: 23,
+                  //     ),
+                  //     Text(widget.data.place,
+                  //         style: GoogleFonts.roboto(
+                  //             fontSize: 15,
+                  //             fontWeight: FontWeight.normal,
+                  //             color: Colors.grey.withOpacity(0.8)))
+                  //   ],
+                  // ),
                   const SizedBox(
                     height: 8,
                   ),
@@ -151,11 +151,26 @@ class _HomePageItemWidgetState extends State<HomePageItemWidget> {
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white)),
-                                  Text(widget.data.customerRole,
-                                      style: GoogleFonts.roboto(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.grey.withOpacity(0.8)))
+                                  // Text(widget.data.customerRole,
+                                  //     style: GoogleFonts.roboto(
+                                  //         fontSize: 12,
+                                  //         fontWeight: FontWeight.normal,
+                                  //         color: Colors.grey.withOpacity(0.8)))
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on,
+                                        color: Colors.grey.withOpacity(0.8),
+                                        size: 23,
+                                      ),
+                                      Text(widget.data.place,
+                                          style: GoogleFonts.roboto(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                              color:
+                                                  Colors.grey.withOpacity(0.8)))
+                                    ],
+                                  ),
                                 ],
                               )
                             ],
@@ -164,7 +179,7 @@ class _HomePageItemWidgetState extends State<HomePageItemWidget> {
                       ),
                       Text(widget.data.time,
                           style: GoogleFonts.roboto(
-                              fontSize: 13,
+                              fontSize: 15,
                               fontWeight: FontWeight.normal,
                               color: Colors.grey.withOpacity(0.8)))
                     ],
@@ -173,7 +188,7 @@ class _HomePageItemWidgetState extends State<HomePageItemWidget> {
               ),
             ),
             Positioned(
-                top: 10,
+                top: -5,
                 right: 10,
                 child: GestureDetector(
                     onTap: () {
@@ -186,9 +201,9 @@ class _HomePageItemWidgetState extends State<HomePageItemWidget> {
                     },
                     child: Icon(
                       Icons.bookmark,
-                      size: 35,
+                      size: 36,
                       color: (saved_posts_by_id.contains(widget.data.id - 1))
-                          ? Colors.red
+                          ? Color.fromRGBO(165, 0, 0, 0.8)
                           : Colors.black,
                     ))),
           ],

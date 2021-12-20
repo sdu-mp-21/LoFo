@@ -19,6 +19,7 @@ class _LoFoItemInfoState extends State<LoFoItemInfo> {
     launchURL(String url) async {
       if (!await launch(url)) throw 'Could not launch $url';
     }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Description'),
@@ -29,7 +30,7 @@ class _LoFoItemInfoState extends State<LoFoItemInfo> {
         foregroundColor: Colors.black,
         actions: [
           GestureDetector(
-            onTap: (){
+            onTap: () {
               showModalBottomSheet<void>(
                 context: context,
                 builder: (BuildContext context) {
@@ -43,58 +44,98 @@ class _LoFoItemInfoState extends State<LoFoItemInfo> {
                       ),
                       child: Column(
                         children: [
-                          SizedBox(height: 25,),
-                          Text('Share this post on social media', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 17),),
-                          SizedBox(height: 25,),
-                          Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    launchURL(
-                                        'https://www.instagram.com/flutter.developers/');
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset('assets/image/87390.png', height: 40,width:40,),
-                                      SizedBox(height: 10,),
-                                      const Text('Stories', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),)
-                                    ],
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: (){
-                                    launchURL(
-                                        'https://api.whatsapp.com/send/?phone=77089373529&text&app_absent=0');
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset('assets/image/WhatsApp_logo-color-vertical.svg.png', height: 40,width:40,),
-                                      SizedBox(height: 10,),
-                                      const Text('Whatsapp', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),)
-                                    ],
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: (){
-                                    launchURL(
-                                        'https://api.whatsapp.com/send/?phone=77089373529&text&app_absent=0');
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset('assets/image/Telegram_2019_Logo.svg.png', height: 40,width:40,),
-                                      SizedBox(height: 10,),
-                                      const Text('Telegram', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),)
-                                    ],
-                                  ),
-                                )
-                              ],
-                            )
+                          SizedBox(
+                            height: 25,
                           ),
+                          Text(
+                            'Share this post on social media',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 17),
+                          ),
+                          SizedBox(
+                            height: 25,
+                          ),
+                          Center(
+                              child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  launchURL(
+                                      'https://www.instagram.com/flutter.developers/');
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/image/87390.png',
+                                      height: 40,
+                                      width: 40,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    const Text(
+                                      'Stories',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w700),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  launchURL(
+                                      'https://api.whatsapp.com/send/?phone=77089373529&text&app_absent=0');
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/image/WhatsApp_logo-color-vertical.svg.png',
+                                      height: 40,
+                                      width: 40,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    const Text(
+                                      'Whatsapp',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w700),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  launchURL(
+                                      'https://api.whatsapp.com/send/?phone=77089373529&text&app_absent=0');
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/image/Telegram_2019_Logo.svg.png',
+                                      height: 40,
+                                      width: 40,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    const Text(
+                                      'Telegram',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w700),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          )),
                         ],
                       ),
                     ),
@@ -181,7 +222,7 @@ class _LoFoItemInfoState extends State<LoFoItemInfo> {
                       style: GoogleFonts.roboto(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black38),
+                          color: Color.fromRGBO(165, 0, 0, 0.8)),
                       textAlign: TextAlign.start,
                     ),
                   ),
@@ -213,14 +254,14 @@ class _LoFoItemInfoState extends State<LoFoItemInfo> {
                                         Radius.circular(40)),
                                     image: DecorationImage(
                                       image:
-                                      NetworkImage(widget.data.customerImg),
+                                          NetworkImage(widget.data.customerImg),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
                                 Column(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(widget.data.customerName,
@@ -228,12 +269,15 @@ class _LoFoItemInfoState extends State<LoFoItemInfo> {
                                             fontSize: 19,
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black)),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
                                     Text(widget.data.customerRole,
                                         style: GoogleFonts.roboto(
-                                            fontSize: 15,
+                                            fontSize: 16,
                                             fontWeight: FontWeight.normal,
                                             color:
-                                            Colors.grey.withOpacity(0.8)))
+                                                Colors.grey.withOpacity(0.8)))
                                   ],
                                 )
                               ],
@@ -248,7 +292,7 @@ class _LoFoItemInfoState extends State<LoFoItemInfo> {
                               margin: EdgeInsets.only(bottom: 10),
                               decoration: BoxDecoration(
                                 borderRadius:
-                                const BorderRadius.all(Radius.circular(17)),
+                                    const BorderRadius.all(Radius.circular(17)),
                                 color: Colors.lightBlue,
                               ),
                               child: Text(
@@ -263,7 +307,7 @@ class _LoFoItemInfoState extends State<LoFoItemInfo> {
                             ),
                             Text(widget.data.time,
                                 style: GoogleFonts.roboto(
-                                    fontSize: 14,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.normal,
                                     color: Colors.grey.withOpacity(0.8)))
                           ],

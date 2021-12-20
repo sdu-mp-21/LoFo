@@ -17,9 +17,10 @@ class _SavedPostsPageState extends State<SavedPostsPage> {
   late FToast fToast;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
   }
+
   void _showCartAdded() {
     fToast.showToast(
       child: Dismissible(
@@ -27,55 +28,80 @@ class _SavedPostsPageState extends State<SavedPostsPage> {
         child: Align(
           alignment: Alignment.topCenter,
           child: Material(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             color: Colors.transparent,
             child: Padding(
               padding: const EdgeInsets.only(top: 10, bottom: 10),
               child: Container(
                 width: 400,
                 // height: 77,
-                constraints: const BoxConstraints(
-                    minHeight: 77
-                ),
-                decoration:  const BoxDecoration(
+                constraints: const BoxConstraints(minHeight: 77),
+                decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     color: Colors.white
-                  // color: Color.fromRGBO(241, 243, 245, 0.8),
-                ),
+                    // color: Color.fromRGBO(241, 243, 245, 0.8),
+                    ),
                 child: Row(
                   children: [
-                    const SizedBox(width: 14,),
+                    const SizedBox(
+                      width: 14,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 7,),
+                          const SizedBox(
+                            height: 7,
+                          ),
                           Row(
                             children: const [
                               // Image(image: AssetImage('images/sandyqLogoCart1.png'), height: 18,),
-                              SizedBox(width: 5,),
-                              Text('Lost & Found', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14,color: Color.fromRGBO(161, 51, 10, 0.8)),)
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                'Lost & Found',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14,
+                                    color: Color.fromRGBO(161, 51, 10, 0.8)),
+                              )
                             ],
                           ),
-                          const SizedBox(height: 7,),
-                          const Text('You have succesfully deleted saved post', style: TextStyle(fontFamily: 'Google-Sans',fontWeight: FontWeight.w700, fontSize: 16)),
-                          const SizedBox(height: 14,),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          const Text('You have succesfully deleted saved post',
+                              style: TextStyle(
+                                  fontFamily: 'Google-Sans',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16)),
+                          const SizedBox(
+                            height: 14,
+                          ),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 2,),
-                    const Icon(Icons.delete_outline, color: Colors.red,),
-                    const SizedBox(width: 14,),
+                    const SizedBox(
+                      width: 2,
+                    ),
+                    const Icon(
+                      Icons.delete_outline,
+                      color: Color.fromRGBO(165, 0, 0, 0.8),
+                    ),
+                    const SizedBox(
+                      width: 14,
+                    ),
                   ],
                 ),
               ),
             ),
           ),
-        )
-        ,
+        ),
         direction: DismissDirection.up,
         onDismissed: (direction) {
-          if(direction == DismissDirection.endToStart) {
+          if (direction == DismissDirection.endToStart) {
             fToast.removeCustomToast();
           }
         },
@@ -84,12 +110,13 @@ class _SavedPostsPageState extends State<SavedPostsPage> {
       toastDuration: const Duration(seconds: 5),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     fToast = FToast();
     fToast.init(context);
     List<Record> saved_posts = [];
-    for(var i in saved_posts_by_id){
+    for (var i in saved_posts_by_id) {
       saved_posts.add(allRecords[i]);
     }
     return Scaffold(
@@ -102,43 +129,63 @@ class _SavedPostsPageState extends State<SavedPostsPage> {
         foregroundColor: Colors.black,
         automaticallyImplyLeading: false,
         leading: GestureDetector(
-          onTap: (){
-            saved_posts_by_id.clear();
-            setState(() {});
-          },
-          child: const Icon(Icons.delete, color: Colors.red,)
-        ),
+            onTap: () {
+              saved_posts_by_id.clear();
+              setState(() {});
+            },
+            child: const Icon(
+              Icons.delete,
+              color: Color.fromRGBO(165, 0, 0, 0.8),
+            )),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          (saved_posts.isNotEmpty)?Expanded(
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: saved_posts.length,
-              itemBuilder: (context, index){
-                return Dismissible(
-                  key: UniqueKey(),
-                  onDismissed: (direction) {
-                    setState(() {
-                      saved_posts_by_id.removeAt(index);
-                    });
-                    _showCartAdded();
-                  },
-                  background: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      Text('Delete Post', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),),
-                      SizedBox(width: 10,),
-                      Icon(Icons.delete, color: Colors.red,),
-                      SizedBox(width: 20,),
-                    ],
-                  ),
-                  child: HomePageItemWidget(data: saved_posts[index],)
-                );
-              }
-            ),
-          ):const Center(child: Text('There is no saved post', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),))
+          (saved_posts.isNotEmpty)
+              ? Expanded(
+                  child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: saved_posts.length,
+                      itemBuilder: (context, index) {
+                        return Dismissible(
+                            key: UniqueKey(),
+                            onDismissed: (direction) {
+                              setState(() {
+                                saved_posts_by_id.removeAt(index);
+                              });
+                              _showCartAdded();
+                            },
+                            background: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: const [
+                                Text(
+                                  'Delete Post',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                              ],
+                            ),
+                            child: HomePageItemWidget(
+                              data: saved_posts[index],
+                            ));
+                      }),
+                )
+              : const Center(
+                  child: Text(
+                  'There is no saved post',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                ))
         ],
       ),
       // body: Expanded(

@@ -66,7 +66,7 @@ class AuthorItemHelper extends StatelessWidget {
                             style: GoogleFonts.roboto(
                                 fontSize: 15,
                                 fontWeight: FontWeight.normal,
-                                color: Colors.grey.withOpacity(0.8)))
+                                color: Colors.grey.withOpacity(0.9)))
                       ],
                     ),
                     const SizedBox(
@@ -84,7 +84,7 @@ class AuthorItemHelper extends StatelessWidget {
                           child: Text(
                             data.status,
                             style: GoogleFonts.roboto(
-                              fontSize: 13,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),

@@ -34,23 +34,24 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   void initState() {
     super.initState();
   }
+
   void _showPopupMenu(Offset globalPosition) async {
     await showMenu(
       context: context,
       position: const RelativeRect.fromLTRB(100, 50, 0, 0),
       items: [
         PopupMenuItem<String>(
-          onTap: (){
-            _selection = 'title';
-          },
-          child: const Text('By title')),
+            onTap: () {
+              _selection = 'title';
+            },
+            child: const Text('By title')),
         PopupMenuItem<String>(
-            onTap: (){
+            onTap: () {
               _selection = 'author';
             },
             child: const Text('By author')),
         PopupMenuItem<String>(
-            onTap: (){
+            onTap: () {
               _selection = 'place';
             },
             child: const Text('By place')),
@@ -58,6 +59,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       elevation: 8.0,
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -67,35 +69,35 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             children: [
               Expanded(
                 child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    color: Colors.grey.withOpacity(0.2)
-                  ),
-                  child: TextField(
-                    controller: _search,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Search',
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    ),
-                    onChanged: (String str){
-                      setState(() {});
-                    },
-                  )
-                ),
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12)),
+                        color: Colors.grey.withOpacity(0.5)),
+                    child: TextField(
+                      controller: _search,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Search',
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                      ),
+                      onChanged: (String str) {
+                        setState(() {});
+                      },
+                    )),
               ),
               GestureDetector(
-                onTapDown: (TapDownDetails details) {
-                  _showPopupMenu(details.globalPosition);
-                },
-                child: const Icon(Icons.search)
-              ),
-              const SizedBox(width: 10,)
+                  onTapDown: (TapDownDetails details) {
+                    _showPopupMenu(details.globalPosition);
+                  },
+                  child: const Icon(Icons.search)),
+              const SizedBox(
+                width: 10,
+              )
             ],
           ),
           const SizedBox(
-            height: 10,
+            height: 20,
           ),
           TopListviewWidget(
             controller: _controller,
@@ -104,141 +106,151 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             height: 10,
           ),
           (_search.text.isNotEmpty)
-          ?Expanded(
-            child: FutureBuilder<List<Record>>(
-                future: ApiClient().getPost(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text('${snapshot.error}');
-                  }
-                  if (!snapshot.hasData) {
-                    return const Center(child: Text('LOADING'));
-                  } else {
-                    allRecordPosts = snapshot.data!.toList();
-                    var foundRecords = [];
-                    // allRecordPosts.where((element) => element.customerName.toLowerCase().contains(_search.text.toLowerCase())).toList();
-                    for(var post in allRecordPosts){
-                      if(_selection=='title'){
-                        if(post.title.toLowerCase().contains(_search.text.toLowerCase())){
-                          foundRecords.add(post);
+              ? Expanded(
+                  child: FutureBuilder<List<Record>>(
+                      future: ApiClient().getPost(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('${snapshot.error}');
                         }
-                      }else if(_selection=='author'){
-                        if(post.customerName.toLowerCase().contains(_search.text.toLowerCase())){
-                          foundRecords.add(post);
-                        }
-                      }else if(_selection=='place'){
-                        if(post.place.toLowerCase().contains(_search.text.toLowerCase())){
-                          foundRecords.add(post);
-                        }
-                      }
-                    }
-                    return ListView.builder(
-                        controller: _controller,
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: foundRecords.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoFoItemInfo(
-                                        data: foundRecords[index]),
-                                  ),
-                                );
-                                // Navigator.of(context).pushNamed('/item_information');
-                              },
-                              child: HomePageItemWidget(
-                                data: foundRecords[index],
-                              ));
-                        });
-                  }
-                }),
-          )
-          :Expanded(
-            child: FutureBuilder<List<Record>>(
-                future: ApiClient().getPost(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text('${snapshot.error}');
-                  }
-                  if (!snapshot.hasData) {
-                    return const Center(child: Text('LOADING'));
-                  } else {
-                    allRecordPosts = snapshot.data!.toList();
-                    return ListView.builder(
-                        controller: _controller,
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (index % 3 == 0) {
-                            return Column(
-                              children: [
-                                // 'Category ${index/3+1}'
-
-                                Text(
-                                  categories[(index / 3).toInt()],
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                GestureDetector(
+                        if (!snapshot.hasData) {
+                          return const Center(child: Text('LOADING'));
+                        } else {
+                          allRecordPosts = snapshot.data!.toList();
+                          var foundRecords = [];
+                          // allRecordPosts.where((element) => element.customerName.toLowerCase().contains(_search.text.toLowerCase())).toList();
+                          for (var post in allRecordPosts) {
+                            if (_selection == 'title') {
+                              if (post.title
+                                  .toLowerCase()
+                                  .contains(_search.text.toLowerCase())) {
+                                foundRecords.add(post);
+                              }
+                            } else if (_selection == 'author') {
+                              if (post.customerName
+                                  .toLowerCase()
+                                  .contains(_search.text.toLowerCase())) {
+                                foundRecords.add(post);
+                              }
+                            } else if (_selection == 'place') {
+                              if (post.place
+                                  .toLowerCase()
+                                  .contains(_search.text.toLowerCase())) {
+                                foundRecords.add(post);
+                              }
+                            }
+                          }
+                          return ListView.builder(
+                              controller: _controller,
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: foundRecords.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return GestureDetector(
                                     onTap: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => LoFoItemInfo(
-                                              data: snapshot.data![index]),
+                                              data: foundRecords[index]),
                                         ),
                                       );
                                       // Navigator.of(context).pushNamed('/item_information');
                                     },
                                     child: HomePageItemWidget(
-                                      data: snapshot.data![index],
-                                    )),
-                              ],
-                            );
-                          }
-                          return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    PageRouteBuilder(
-                                        transitionDuration:
-                                            Duration(seconds: 2),
-                                        transitionsBuilder:
-                                            (BuildContext context,
-                                                Animation<double> animation,
-                                                Animation<double> secanimation,
-                                                Widget child) {
-                                          animation = CurvedAnimation(
-                                              parent: animation,
-                                              curve: Curves.elasticInOut);
+                                      data: foundRecords[index],
+                                    ));
+                              });
+                        }
+                      }),
+                )
+              : Expanded(
+                  child: FutureBuilder<List<Record>>(
+                      future: ApiClient().getPost(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('${snapshot.error}');
+                        }
+                        if (!snapshot.hasData) {
+                          return const Center(child: Text('LOADING'));
+                        } else {
+                          allRecordPosts = snapshot.data!.toList();
+                          return ListView.builder(
+                              controller: _controller,
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                if (index % 3 == 0) {
+                                  return Column(
+                                    children: [
+                                      // 'Category ${index/3+1}'
 
-                                          return ScaleTransition(
-                                            alignment: Alignment.center,
-                                            scale: animation,
-                                            child: child,
-                                          );
-                                        },
-                                        pageBuilder: (BuildContext context,
-                                            Animation<double> animation,
-                                            Animation<double>
-                                                secondaryAnimation) {
-                                          // Navigator.of(context).pushNamed('/item_information');
-                                          return LoFoItemInfo(
+                                      Text(
+                                        categories[(index / 3).toInt()],
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    LoFoItemInfo(
+                                                        data: snapshot
+                                                            .data![index]),
+                                              ),
+                                            );
+                                            // Navigator.of(context).pushNamed('/item_information');
+                                          },
+                                          child: HomePageItemWidget(
                                             data: snapshot.data![index],
-                                          );
-                                        }));
-                                // Navigator.of(context).pushNamed('/item_information');
-                              },
-                              child: HomePageItemWidget(
-                                data: snapshot.data![index],
-                              ));
-                        });
-                  }
-                }),
-          ),
+                                          )),
+                                    ],
+                                  );
+                                }
+                                return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          PageRouteBuilder(
+                                              transitionDuration:
+                                                  Duration(seconds: 2),
+                                              transitionsBuilder: (BuildContext
+                                                      context,
+                                                  Animation<double> animation,
+                                                  Animation<double>
+                                                      secanimation,
+                                                  Widget child) {
+                                                animation = CurvedAnimation(
+                                                    parent: animation,
+                                                    curve: Curves.elasticInOut);
+
+                                                return ScaleTransition(
+                                                  alignment: Alignment.center,
+                                                  scale: animation,
+                                                  child: child,
+                                                );
+                                              },
+                                              pageBuilder: (BuildContext
+                                                      context,
+                                                  Animation<double> animation,
+                                                  Animation<double>
+                                                      secondaryAnimation) {
+                                                // Navigator.of(context).pushNamed('/item_information');
+                                                return LoFoItemInfo(
+                                                  data: snapshot.data![index],
+                                                );
+                                              }));
+                                      // Navigator.of(context).pushNamed('/item_information');
+                                    },
+                                    child: HomePageItemWidget(
+                                      data: snapshot.data![index],
+                                    ));
+                              });
+                        }
+                      }),
+                ),
         ]));
   }
 }

@@ -72,9 +72,9 @@ class _IntroSliderPageState extends State<IntroSliderPage> {
                 ),
                 child: Text(
                   currentSlide.description ?? "",
-                  style: GoogleFonts.philosopher(
+                  style: GoogleFonts.roboto(
                     fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                   ),
                   textAlign: TextAlign.center,
                   // overflow: TextOverflow.ellipsis,
@@ -151,9 +151,11 @@ class _IntroSliderPageState extends State<IntroSliderPage> {
     );
   }
 }
+
 Route _createRoute() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const SigninWidget(),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const SigninWidget(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;

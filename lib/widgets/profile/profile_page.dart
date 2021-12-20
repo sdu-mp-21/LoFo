@@ -20,8 +20,12 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
         child: Column(
           children: [
             Container(
+              // decoration: BoxDecoration(
+              //     border: Border(
+              //         top: BorderSide(color: Colors.black, width: 1),
+              //         bottom: BorderSide(color: Colors.black, width: 1))),
               width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.fromLTRB(0, 45, 0, 40),
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
               padding: const EdgeInsets.all(20),
               color: Colors.white,
               child: Row(
@@ -217,8 +221,13 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                 Navigator.of(context).pop();
               },
               child: Container(
-                width: MediaQuery.of(context).size.width,
+                // decoration: BoxDecoration(
+                //     color: Colors.white,
+                //     border: Border(
+                //         top: BorderSide(color: Colors.grey),
+                //         bottom: BorderSide(color: Colors.grey))),
                 color: Colors.white,
+                width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                 child: Text(
                   "Log Out",

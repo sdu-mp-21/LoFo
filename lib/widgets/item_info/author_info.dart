@@ -33,9 +33,9 @@ class _ItemAuthorInfoState extends State<ItemAuthorInfo> {
                 color: Colors.black)),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Colors.blueAccent.withOpacity(0.1),
+        backgroundColor: Colors.white,
         //backgroundColor: Colors.grey.withOpacity(0.7),
-        foregroundColor: Colors.white,
+        foregroundColor: Colors.black,
       ),
       body: Container(
           //decoration: new BoxDecoration(color: Colors.blue.withOpacity(0.1)),
@@ -78,7 +78,7 @@ class _ItemAuthorInfoState extends State<ItemAuthorInfo> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "1901031235577@stu.sdu.edu.kz",
+                            "190103123@stu.sdu.edu.kz",
                             style: GoogleFonts.roboto(
                                 color: Colors.white,
                                 fontSize: 17,
@@ -90,7 +90,7 @@ class _ItemAuthorInfoState extends State<ItemAuthorInfo> {
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 30),
+                  // margin: EdgeInsets.only(bottom: 30),
                   decoration: new BoxDecoration(color: Colors.white),
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.fromLTRB(20, 20, 20, 40),
@@ -107,13 +107,13 @@ class _ItemAuthorInfoState extends State<ItemAuthorInfo> {
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black)),
                           const SizedBox(
-                            height: 4,
+                            height: 10,
                           ),
                           Text(
                             widget.data.customerRole,
                             style: GoogleFonts.roboto(
                                 color: Colors.grey,
-                                fontSize: 15,
+                                fontSize: 17,
                                 fontWeight: FontWeight.w500),
                           )
                         ],
@@ -187,21 +187,21 @@ class _ItemAuthorInfoState extends State<ItemAuthorInfo> {
               ],
             ),
           ),
-          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Container(
-              padding: EdgeInsets.all(10),
-              width: MediaQuery.of(context).size.width,
-              child: Text(
-                "All Posts",
-                style: GoogleFonts.roboto(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ]),
+          // Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          //   Container(
+          //     padding: EdgeInsets.all(10),
+          //     width: MediaQuery.of(context).size.width,
+          //     child: Text(
+          //       "All Posts",
+          //       style: GoogleFonts.roboto(
+          //         fontSize: 18,
+          //         fontWeight: FontWeight.bold,
+          //         color: Colors.black,
+          //       ),
+          //       textAlign: TextAlign.center,
+          //     ),
+          //   ),
+          // ]),
           (author_posts.isNotEmpty)
               ? Expanded(
                   child: ListView.builder(

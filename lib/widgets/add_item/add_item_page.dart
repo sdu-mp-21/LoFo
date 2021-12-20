@@ -63,7 +63,8 @@ class AddItemPageWidget extends StatefulWidget {
 }
 
 class _AddItemPageWidgetState extends State<AddItemPageWidget> {
-  static const Color tealGreen = Color.fromRGBO(0, 180, 171, 1);
+  //static const Color tealGreen = Color.fromRGBO(0, 180, 171, 1);
+  static const Color tealGreen = Colors.lightBlue;
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final placeController = TextEditingController();
@@ -86,7 +87,6 @@ class _AddItemPageWidgetState extends State<AddItemPageWidget> {
   var _validatePlace = false;
 
   String message = '';
-
 
   Future uploadImageToFirebase() async {
     print(imageFile);
@@ -126,55 +126,77 @@ class _AddItemPageWidgetState extends State<AddItemPageWidget> {
         child: Align(
           alignment: Alignment.topCenter,
           child: Material(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             color: Colors.transparent,
             child: Padding(
               padding: const EdgeInsets.only(top: 10, bottom: 10),
               child: Container(
                 width: 400,
                 // height: 77,
-                constraints: const BoxConstraints(
-                    minHeight: 77
-                ),
-                decoration:  const BoxDecoration(
+                constraints: const BoxConstraints(minHeight: 77),
+                decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     color: Colors.white
-                  // color: Color.fromRGBO(241, 243, 245, 0.8),
-                ),
+                    // color: Color.fromRGBO(241, 243, 245, 0.8),
+                    ),
                 child: Row(
                   children: [
-                    const SizedBox(width: 14,),
+                    const SizedBox(
+                      width: 14,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 7,),
+                          const SizedBox(
+                            height: 7,
+                          ),
                           Row(
                             children: const [
                               // Image(image: AssetImage('images/sandyqLogoCart1.png'), height: 18,),
-                              SizedBox(width: 5,),
-                              Text('Lost & Found', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14,color: Color.fromRGBO(161, 51, 10, 0.8)),)
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                'Lost & Found',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14,
+                                    color: Color.fromRGBO(161, 51, 10, 0.8)),
+                              )
                             ],
                           ),
-                          const SizedBox(height: 7,),
-                          const Text('You have added new post succesfully', style: TextStyle(fontFamily: 'Google-Sans',fontWeight: FontWeight.w700, fontSize: 16)),
-                          const SizedBox(height: 14,),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          const Text('You have added new post succesfully',
+                              style: TextStyle(
+                                  fontFamily: 'Google-Sans',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16)),
+                          const SizedBox(
+                            height: 14,
+                          ),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 2,),
+                    const SizedBox(
+                      width: 2,
+                    ),
                     const Icon(Icons.done),
-                    const SizedBox(width: 14,),
+                    const SizedBox(
+                      width: 14,
+                    ),
                   ],
                 ),
               ),
             ),
           ),
-        )
-        ,
+        ),
         direction: DismissDirection.up,
         onDismissed: (direction) {
-          if(direction == DismissDirection.endToStart) {
+          if (direction == DismissDirection.endToStart) {
             fToast.removeCustomToast();
           }
         },
