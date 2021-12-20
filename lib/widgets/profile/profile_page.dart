@@ -100,7 +100,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed('/change_data');
+                      Navigator.of(context).pushNamed('/edit_data');
                     },
                     child: Row(
                       children: const [
